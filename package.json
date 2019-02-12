@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/NuclearHorseStudios/yardtp-datetimepicker/issues"
   },
-  "homepage": "https://github.com/NuclearHorseStudios/yardtp-datetimepicker#readme"
+  "homepage": "https://github.com/NuclearHorseStudios/yardtp-datetimepicker#readme",
+  "devDependencies": {
+    "eslint": "^5.13.0"
+  }
 }

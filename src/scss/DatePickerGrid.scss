@@ -1,0 +1,72 @@
+
+@mixin day-name-heading {
+    text-align: center;
+    font-weight: bold;
+}
+
+@mixin month-year-heading {
+    text-align: center;
+    font-size: 120%;
+}
+
+@mixin day {
+    font-weight: normal;
+    text-align: center;
+}
+
+
+$calendarCellMargin: 0.2em;
+
+.date-picker {
+    .calendar-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-gap: $calendarCellMargin;
+        grid-auto-rows: minmax(1em, auto);
+
+        @for $i from 1 to 7 {
+            .day-#{$i} {
+                grid-column: $i;
+            }
+        }
+    
+        @for $i from 1 to 6 {
+            .week-#{$i} {
+                grid-row: $i;
+            }
+        }
+
+        .day {
+            @include day;
+
+            margin: 0;
+            padding-top: 10%;
+            padding-bottom: 10%;
+        }
+    }
+
+    .day-name-headings {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        grid-gap: $calendarCellMargin;
+        grid-auto-rows: minmax(1em, auto);
+
+        h4 {
+            @include day-name-heading;
+        }
+    }
+
+    .month-select {
+        display: grid;
+        grid-template-columns: 1fr 4fr 1fr;
+        margin-bottom: 0.5em;
+
+        label > button {
+            width: 100%;
+        }
+        
+        h3 {
+            @include month-year-heading;
+        }
+    }
+}
