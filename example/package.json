@@ -21,11 +21,10 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "peerDependencies": {
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
-  },
+  "peerDependencies": {},
   "devDependencies": {
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
     "enzyme": "^3.8.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "node-sass": "^4.11.0",

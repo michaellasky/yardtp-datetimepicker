@@ -13,7 +13,7 @@ npm install --save yardtp-datetimepicker
 ## Usage
 
 ```jsx
-import React, { Component } from 'react'
+import React from 'react'
 
 import DatetimePicker from 'yardtp-datetimepicker'
 
