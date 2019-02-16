@@ -1,14 +1,14 @@
 {
-  "name": "react-modern-library-boilerplate-example",
-  "homepage": "https://transitive-bullshit.github.io/react-modern-library-boilerplate",
+  "name": "yardtp-datetimepicker-examples",
+  "homepage": "https://nuclearhorsestudios.github.io/yardtp-datetimepicker/",
   "version": "0.0.0",
   "private": true,
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "prop-types": "^15.5.4",
+    "prop-types": "^15.7.2",
     "react-scripts": "^2.1.5",
-    "yardtp-datetimepicker": "^1.0.2"
+    "yardtp-datetimepicker": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -12,17 +12,25 @@ npm install --save yardtp-datetimepicker
 
 ## Usage
 
+[Go to Live Examples](https://nuclearhorsestudios.github.io/yardtp-datetimepicker/)
+
 ```jsx
 import React from 'react'
+import DateTime from 'luxon';
+import DatePicker, { TimePicker, useDatePickerState } from 'yardtp-datetimepicker'
 
-import DatetimePicker from 'yardtp-datetimepicker'
+export default Example  {
 
-class Example extends Component {
-  render () {
-    return (
-      <DatetimePicker />
-    )
-  }
+  const state = useDatePickerState(); 
+  const [value, setValue, calValue, setCalValue] = state;
+
+  return (
+    <>
+      Currently selected value: {value.toFormat('ffff')}
+      <DatePicker state={state}/>
+      <TimePicker state={state}/>
+    </>
+  );
 }
 ```
 
