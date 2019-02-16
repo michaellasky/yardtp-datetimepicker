@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { MonthYearPicker, DatePickerDayInput } from 'yardtp-datetimepicker';
+import DatePicker, { MonthYearPicker, CalendarDay } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import { DateTime, Duration } from 'luxon';
@@ -88,7 +88,7 @@ describe('<MonthYearPicker />', () => {
     });
 });
 
-describe('<DatePickerDayInput />', () => {
+describe('<CalendarDay />', () => {
 
     beforeEach(() => {});
 
@@ -98,7 +98,7 @@ describe('<DatePickerDayInput />', () => {
     });
 
     function mountComponent(props) {
-        wrapper = mount(<DatePickerDayInput {...props} />);
+        wrapper = mount(<CalendarDay {...props} />);
     } 
 
     it ('Renders without crashing', () => {

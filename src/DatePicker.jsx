@@ -33,7 +33,7 @@ export default function DatePicker (props) {
             });            
 
             return (
-                <DatePickerDayInput {...{
+                <CalendarDay {...{
                     className: `day day-${dayInWeek+1} week-${weekNum+1}`,
                     key: dayNumber,
                     state: [value, (v) => { setCalValue(v); setValue(v);}],
@@ -66,7 +66,7 @@ export default function DatePicker (props) {
     );
 }
 
-export function DatePickerDayInput (props) {
+export function CalendarDay (props) {
     const now = DateTime.local();
     const [selectedValue, setSelectedValue] = props.state || useState(now);
     const value         = props.value        || now;
@@ -139,7 +139,7 @@ export function TimePicker (props) {
     const interval          = props.intervalStep || 15;
     const format            = props.format       || DateTime.TIME_SIMPLE;
     
-    function restrictToDay (t, v = value) {
+    function restrictTime (t, v = value) {
         return DateTime.local(v.year, v.month, v.day, t.hour, t.minute);
     } 
 
@@ -148,8 +148,7 @@ export function TimePicker (props) {
         const addedMinutes = Duration.fromObject({'minutes': num-overflow});
         const time = value.plus(addedMinutes);
 
-        if (restrictTimeToDay) { return setValue(restrictToDay(time)); }
-        else                   { return setValue(time);                }
+        return restrictTimeToDay? setValue(restrictTime(time)): setValue(time);
     }
     
     return (
