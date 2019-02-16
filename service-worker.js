@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/NuclearHorseStudios/yardtp-datetimepicker/precache-manifest.1a6a3a4206568d1ad472a6a7b916bca7.js"
+  "/yardtp-datetimepicker/precache-manifest.a0d795311ba90ee74aa8db53da856829.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/NuclearHorseStudios/yardtp-datetimepicker/index.html", {
+workbox.routing.registerNavigationRoute("/yardtp-datetimepicker/index.html", {
   
   blacklist: [/^\/_/,/\/[^\/]+\.[^\/]+$/],
 });

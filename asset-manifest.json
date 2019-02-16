@@ -1,13 +1,13 @@
 {
-  "main.css": "/NuclearHorseStudios/yardtp-datetimepicker/static/css/main.df67472e.chunk.css",
-  "main.js": "/NuclearHorseStudios/yardtp-datetimepicker/static/js/main.bd96ac59.chunk.js",
-  "main.js.map": "/NuclearHorseStudios/yardtp-datetimepicker/static/js/main.bd96ac59.chunk.js.map",
-  "runtime~main.js": "/NuclearHorseStudios/yardtp-datetimepicker/static/js/runtime~main.69ceea92.js",
-  "runtime~main.js.map": "/NuclearHorseStudios/yardtp-datetimepicker/static/js/runtime~main.69ceea92.js.map",
-  "static/js/2.3e70cdff.chunk.js": "/NuclearHorseStudios/yardtp-datetimepicker/static/js/2.3e70cdff.chunk.js",
-  "static/js/2.3e70cdff.chunk.js.map": "/NuclearHorseStudios/yardtp-datetimepicker/static/js/2.3e70cdff.chunk.js.map",
-  "index.html": "/NuclearHorseStudios/yardtp-datetimepicker/index.html",
-  "precache-manifest.1a6a3a4206568d1ad472a6a7b916bca7.js": "/NuclearHorseStudios/yardtp-datetimepicker/precache-manifest.1a6a3a4206568d1ad472a6a7b916bca7.js",
-  "service-worker.js": "/NuclearHorseStudios/yardtp-datetimepicker/service-worker.js",
-  "static/css/main.df67472e.chunk.css.map": "/NuclearHorseStudios/yardtp-datetimepicker/static/css/main.df67472e.chunk.css.map"
+  "main.css": "/yardtp-datetimepicker/static/css/main.df67472e.chunk.css",
+  "main.js": "/yardtp-datetimepicker/static/js/main.bd96ac59.chunk.js",
+  "main.js.map": "/yardtp-datetimepicker/static/js/main.bd96ac59.chunk.js.map",
+  "runtime~main.js": "/yardtp-datetimepicker/static/js/runtime~main.e9bc9597.js",
+  "runtime~main.js.map": "/yardtp-datetimepicker/static/js/runtime~main.e9bc9597.js.map",
+  "static/js/2.3e70cdff.chunk.js": "/yardtp-datetimepicker/static/js/2.3e70cdff.chunk.js",
+  "static/js/2.3e70cdff.chunk.js.map": "/yardtp-datetimepicker/static/js/2.3e70cdff.chunk.js.map",
+  "index.html": "/yardtp-datetimepicker/index.html",
+  "precache-manifest.a0d795311ba90ee74aa8db53da856829.js": "/yardtp-datetimepicker/precache-manifest.a0d795311ba90ee74aa8db53da856829.js",
+  "service-worker.js": "/yardtp-datetimepicker/service-worker.js",
+  "static/css/main.df67472e.chunk.css.map": "/yardtp-datetimepicker/static/css/main.df67472e.chunk.css.map"
 }
