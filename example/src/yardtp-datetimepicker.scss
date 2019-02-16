@@ -1,0 +1,24 @@
+@import '../node_modules/yardtp-datetimepicker/src/scss/Variables.scss';
+
+// Example of overriding color variables 
+// See Variables.scss for all variables
+// ---------------------------------
+// $primaryColor: #ff0000;
+// $secondaryColor: #00ff00;
+// $disabledColor: #333333;
+
+
+@import '../node_modules/yardtp-datetimepicker/src/scss/Mixins.scss';
+
+
+// Example of overriding a mixin 
+// See Mixins.scss for all mixins
+// ---------------------------------
+//
+// @mixin time-display {
+//     text-align: right;
+//     font-size: 80%;
+//     color: $primaryColor;
+// }
+
+@import '../node_modules/yardtp-datetimepicker/src/scss/Base.scss';

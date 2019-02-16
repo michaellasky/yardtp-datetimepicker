@@ -8,7 +8,7 @@ import url from 'rollup-plugin-url'
 import pkg from './package.json'
 
 export default {
-  input: 'src/index.js',
+  input: 'src/DatePicker.jsx',
   output: [
     {
       file: pkg.main,
@@ -22,7 +22,7 @@ export default {
     }
   ],
   plugins: [
-    external(),
+    external(['luxon', 'classnames', 'react', 'react-dom']),
     postcss({
       modules: true
     }),
@@ -32,6 +32,10 @@ export default {
       plugins: [ 'external-helpers' ]
     }),
     resolve(),
-    commonjs()
+    commonjs({
+      namedExports: {
+        'react': ['useState']
+      }
+    })
   ]
 }

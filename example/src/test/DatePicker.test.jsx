@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { MonthYearPicker, DatePickerDayInput } from './DatePicker';
+import DatePicker, { MonthYearPicker, DatePickerDayInput } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import { DateTime, Duration } from 'luxon';
@@ -50,24 +50,17 @@ describe('<MonthYearPicker />', () => {
         mountComponent();
     });
 
-    it('Sets current month when props.value isnt passed', () => {
-        const format = 'MMMM';
-        mountComponent({ monthFormat: format });
-        expect(wrapper.find('span.datepicker-month').text())
-            .toBe(DateTime.local().toFormat(format));
-    });
-
-    it('Sets current year when props.value isnt passed', () => {
-        const yearFormat = 'Y';
-        mountComponent({ yearFormat });
-        expect(wrapper.find('span.datepicker-year').text())
+    it('Sets current month and year when props.value isnt passed', () => {
+        const yearFormat = 'M Y';
+        mountComponent({monthFormat: 'M', yearFormat: 'Y'  });
+        expect(wrapper.find('h3.month-year').text())
             .toBe(DateTime.local().toFormat(yearFormat));
     });
 
     it('Has a button.prev-month-button which sets the month back by one', () => {
-        const format = 'M';
+        const format = 'M YYYY';
 
-        mountComponent({monthFormat: format });
+        mountComponent({monthFormat: 'M', yearFormat: 'YYYY'  });
 
         const buttonWrapper = wrapper.find('button.prev-month-button');
         
@@ -76,13 +69,13 @@ describe('<MonthYearPicker />', () => {
         buttonWrapper.simulate('click');
 
         const prevMonth = DateTime.local().minus(Duration.fromObject({'month': 1}));
-        expect(wrapper.find('span.datepicker-month').text()).toBe(prevMonth.toFormat(format))
+        expect(wrapper.find('h3.month-year').text()).toBe(prevMonth.toFormat(format))
     });
 
     it('Has a button.next-month-button which sets the month back by one', () => {
-        const format = 'M';
+        const format = 'M YYYY';
 
-        mountComponent({monthFormat: format });
+        mountComponent({monthFormat: 'M', yearFormat: 'YYYY' });
 
         const buttonWrapper = wrapper.find('button.next-month-button');
         
@@ -91,7 +84,7 @@ describe('<MonthYearPicker />', () => {
         buttonWrapper.simulate('click');
 
         const nextMonth = DateTime.local().plus(Duration.fromObject({'month': 1}));
-        expect(wrapper.find('span.datepicker-month').text()).toBe(nextMonth.toFormat(format))
+        expect(wrapper.find('h3.month-year').text()).toBe(nextMonth.toFormat(format))
     });
 });
 

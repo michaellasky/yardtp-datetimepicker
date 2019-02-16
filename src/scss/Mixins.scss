@@ -1,0 +1,92 @@
+@mixin day-name-heading {
+    text-align: center;
+    font-weight: bold;
+    color: darken(
+        $color: $secondaryColor,
+        $amount: 10%
+    );
+}
+
+@mixin month-year-heading {
+    text-align: center;
+    font-size: 125%;
+    color: darken(
+        $color: $secondaryColor,
+        $amount: 0%
+    );
+}
+
+@mixin day {
+    cursor: pointer;
+    border-radius: 0.5em;
+    text-align: center;
+    background-color: lighten(
+        $color: $secondaryColor,
+        $amount: 35%
+    );    
+
+    color: lighten(
+        $color: saturate($color: $primaryColor, $amount: 25%),
+        $amount: 20%
+    );
+
+    span {
+        display: inline-block;
+        font-weight: normal;
+        padding: 25%;
+    }
+}
+
+@mixin present-day {
+    background-color: lighten(
+        $color: $secondaryColor, 
+        $amount: 20%
+    );
+
+    color: darken(
+        $color: saturate($color: $primaryColor, $amount: 15%),
+        $amount: 25%
+    );
+}
+
+@mixin out-of-range {
+    cursor: default;
+    color: $disabledColor;
+    background-color: lighten($color: $disabledColor, $amount: 20%); 
+}
+
+@mixin selected-day {
+    background-color: lighten(
+        $color: saturate($color: $primaryColor, $amount: 10%),
+        $amount: 40%
+    ); 
+    color: $secondaryColor;
+}
+
+@mixin previous-month {
+    color: $disabledColor;
+    background-color: lighten($color: $disabledColor, $amount: 30%); 
+}
+
+
+@mixin next-month {
+    color: $disabledColor;
+    background-color: lighten($color: $disabledColor, $amount: 30%); 
+}
+
+@mixin time-display {
+    text-align: center;
+    font-weight: bold;
+    font-size: 140%;
+    color: $secondaryColor;
+}
+
+@mixin time-buttons {
+    font-weight: bolder;
+    font-size: 110%;
+}
+
+@mixin month-year-buttons {
+    font-weight: bolder;
+    font-size: 110%;
+}

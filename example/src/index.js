@@ -2,6 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import './index.css'
-import App from './App'
+import Examples from './Examples'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<Examples />, document.getElementById('root'))

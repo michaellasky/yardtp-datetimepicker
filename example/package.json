@@ -3,18 +3,33 @@
   "homepage": "https://transitive-bullshit.github.io/react-modern-library-boilerplate",
   "version": "0.0.0",
   "private": true,
+  "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "prop-types": "^15.6.2",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-modern-library-boilerplate": "link:..",
-    "react-scripts": "^1.1.4"
+    "react-scripts": "^2.1.5",
+    "prop-types": "^15.5.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "peerDependencies": {
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
+  },
+  "devDependencies": {
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "node-sass": "^4.11.0",
+    "classnames": "^2.2.6",
+    "luxon": "^1.11.2"
   }
 }
