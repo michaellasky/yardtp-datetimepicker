@@ -137,7 +137,7 @@ export function TimePicker (props) {
     const [value, setValue] = props.state || useState(DateTime.local());
     const restrictTimeToDay = props.restrictTimeToDay !== false;
     const interval          = props.intervalStep || 15;
-    const format            = props.format       || DateTime.TIME_SIMPLE;
+    const format            = props.format       || 't';
     
     function restrictTime (t, v = value) {
         return DateTime.local(v.year, v.month, v.day, t.hour, t.minute);

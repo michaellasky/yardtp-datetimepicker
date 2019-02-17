@@ -2,13 +2,13 @@ import React from 'react'
 
 import DatePicker, { TimePicker } from 'yardtp-datetimepicker'
 
-import Example1 from './Example.1';
-import Example2 from './Example.2';
-import Example3 from './Example.3';
-import Example4 from './Example.4';
-import Example5 from './Example.5';
-import Example6 from './Example.6';
-import Example7 from './Example.7';
+import Example1 from './examples/Example.1';
+import Example2 from './examples/Example.2';
+import Example3 from './examples/Example.3';
+import Example4 from './examples/Example.4';
+import Example5 from './examples/Example.5';
+import Example6 from './examples/Example.6';
+import Example7 from './examples/Example.7';
 
 import './yardtp-datetimepicker.scss';
 
@@ -19,6 +19,7 @@ export default function Examples (props) {
   return (
       <div className="examples">
         <h1>yardtp-datetimepicker Examples</h1>
+        <a href="https://github.com/NuclearHorseStudios/yardtp-datetimepicker">github</a> | <a href="https://www.npmjs.com/package/yardtp-datetimepicker">npm</a> 
         <nav>
           <ul>
             <li><a href="#basic-rendering">Basic Rendering</a></li>
@@ -33,6 +34,7 @@ export default function Examples (props) {
 
         <h4>DatePicker</h4>
         <p>You can just render a DatePicker on its own, but that's not very useful.</p>
+        <p>The Date or </p>
         <br /><br />
         <div className="example-container">
           <pre>{`\n    <DatePicker />\n\n`}</pre>
@@ -294,7 +296,7 @@ export default function Example7 (props) {
         <p>Below is an example of loading all 3 files, overriding options along the way</p>
         <pre>
 {`
-@import '../node_modules/yardtp-datetimepicker/src/scss/Variables.scss';
+@import '../node_modules/yardtp-datetimepicker/dist/scss/Variables.scss';
 
 // Example of overriding color variables 
 // See Variables.scss for all variables
@@ -304,7 +306,7 @@ $secondaryColor: #00ff00;
 $disabledColor: #333333;
 
 
-@import '../node_modules/yardtp-datetimepicker/src/scss/Mixins.scss';
+@import '../node_modules/yardtp-datetimepicker/dist/scss/Mixins.scss';
 
 
 // Example of overriding a mixin 
@@ -317,7 +319,7 @@ $disabledColor: #333333;
     color: $primaryColor;
 }
 
-@import '../node_modules/yardtp-datetimepicker/src/scss/Base.scss';
+@import '../node_modules/yardtp-datetimepicker/dist/scss/Base.scss';
 `}
         </pre>
       </div>
