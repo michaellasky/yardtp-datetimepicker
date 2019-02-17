@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { DatePicker, TimePicker } from 'yardtp-datetimepicker'
+import DatePicker, { TimePicker } from 'yardtp-datetimepicker'
 
 import Example1 from './examples/Example.1';
 import Example2 from './examples/Example.2';

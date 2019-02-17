@@ -10,7 +10,7 @@ export function useDatePickerState (value, calVal) {
     return [...useState(value || now),...useState(calVal || value || now)];
 }
 
-export function DatePicker (props) {
+export default function DatePicker (props) {
     const [value, setValue, calValue, setCalValue] = props.state || 
                                                      useDatePickerState();
     const earliestDate  = props.earliestDate || MIN_DATE;

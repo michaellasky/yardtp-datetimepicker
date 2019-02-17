@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
+import DatePicker, { TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
 import { DateTime } from 'luxon';
 
 // EXAMPLE 7: Setting restrictTimeToDay on TimePicker 
