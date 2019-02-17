@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { MonthYearPicker, CalendarDay } from 'yardtp-datetimepicker';
+import { DatePicker, MonthYearPicker, CalendarDay } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
 import { DateTime, Duration } from 'luxon';

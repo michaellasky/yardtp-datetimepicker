@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DatePicker, { TimePicker } from 'yardtp-datetimepicker'
+import { DatePicker, TimePicker } from 'yardtp-datetimepicker'
 
 import Example1 from './examples/Example.1';
 import Example2 from './examples/Example.2';
@@ -34,7 +34,6 @@ export default function Examples (props) {
 
         <h4>DatePicker</h4>
         <p>You can just render a DatePicker on its own, but that's not very useful.</p>
-        <p>The Date or </p>
         <br /><br />
         <div className="example-container">
           <pre>{`\n    <DatePicker />\n\n`}</pre>

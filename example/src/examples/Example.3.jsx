@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
+import { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
 
 // EXAMPLE 3: Using DatePicker and TimePicker together
 
