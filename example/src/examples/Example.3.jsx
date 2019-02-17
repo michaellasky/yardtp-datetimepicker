@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
+import DateTimePicker, { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
 
 // EXAMPLE 3: Using DatePicker and TimePicker together
 
@@ -15,6 +15,10 @@ export default function Example3 (props) {
         {selectedValue.toFormat('fff')}
         <DatePicker state={state} />
         <TimePicker state={state} />
+        
+        or
+
+        <DateTimePicker state={state} />
         </>
     );
   }

@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { MAX_DATE, useDatePickerState } from 'yardtp-datetimepicker';
+import { DatePicker, MAX_DATE, useDatePickerState } from 'yardtp-datetimepicker';
 import { DateTime } from 'luxon';
 // EXAMPLE 1: DatePicker basic usage
 

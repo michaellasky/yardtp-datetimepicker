@@ -10,7 +10,15 @@ export function useDatePickerState (value, calVal) {
     return [...useState(value || now),...useState(calVal || value || now)];
 }
 
-export default function DatePicker (props) {
+export default function DateTimePicker (props) {
+    return (
+        <div className="yardtp-datetimepicker">
+        <DatePicker {...props} /> <TimePicker {...props} />
+        </div>
+    );
+}
+
+export function DatePicker (props) {
     const [value, setValue, calValue, setCalValue] = props.state || 
                                                      useDatePickerState();
     const earliestDate  = props.earliestDate || MIN_DATE;
@@ -160,7 +168,7 @@ export function TimePicker (props) {
                     onClick={() => addMinutes(-interval)} 
                 >&lt;</button>
             </label>
-            <div className="time-display">{value.toLocaleString(format)}</div>
+            <div className="time-display">{value.toFormat(format)}</div>
             <label>
                 <span className="sr-only">Increase Time</span>
                 <button

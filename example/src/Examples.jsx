@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DatePicker, { TimePicker } from 'yardtp-datetimepicker'
+import { DatePicker, TimePicker } from 'yardtp-datetimepicker'
 
 import Example1 from './examples/Example.1';
 import Example2 from './examples/Example.2';
@@ -32,6 +32,8 @@ export default function Examples (props) {
         </nav>
         <h2 id="basic-rendering">Basic Rendering</h2>
 
+        <h4>DateTimePicker</h4>
+        <p>The &lt;DateTimePicker /&gt; component is a simple wrapper for a &lt;DatePicker /&gt; followed immediately by a &lt;TimePicker /&gt;.  Therefor you can apply any of the examples below to a &lt;DateTimePicker /&gt;</p>
         <h4>DatePicker</h4>
         <p>You can just render a DatePicker on its own, but that's not very useful.</p>
         <br /><br />
@@ -133,6 +135,10 @@ export default function Example3 (props) {
       {selectedValue.toFormat('fff')}
       <DatePicker state={state} />
       <TimePicker state={state} />
+
+      or
+
+      <DateTimePicker state={state} />
       </>
   );
 }

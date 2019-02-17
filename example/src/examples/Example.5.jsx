@@ -1,5 +1,5 @@
 import React from 'react';
-import DatePicker, { TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
+import { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
 import { Duration } from 'luxon';
 
 // EXAMPLE 5: Setting the Selected Value dynamically

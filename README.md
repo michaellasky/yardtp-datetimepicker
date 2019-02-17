@@ -22,25 +22,29 @@ npm install --save yardtp-datetimepicker
 
 ```jsx
 import React from 'react'
-import DateTime from 'luxon';
-import { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker'
+import DateTimePicker, { useDatePickerState } from 'yardtp-datetimepicker'
 
-export default Example  {
+export default YarDTPExample  {
 
   const state = useDatePickerState(); 
   const [value, setValue, calValue, setCalValue] = state;
 
   return (
     <>
-      Currently selected date: {value.toFormat('ffff')}
-      <DatePicker state={state}/>
-      <TimePicker state={state}/>
+      Currently selected date and time: {value.toFormat('ffff')}
+      <DateTimePicker state={state}/>
     </>
   );
 }
 ```
 
 ## Options
+
+### DateTimePicker 
+| Name              | Default    |  |
+| ----------------- |:----------:| -
+| state             |            | This is an array containing: [selected datetime, set selected datetime function, calendar display datetime, set calendar display datetime function. ]  This is passed through to both DatePicker and TimePicker, and is therefor common to both.
+
 ### DatePicker
 | Name              | Default    |  |
 | ----------------- |:----------:| -
