@@ -1,7 +1,7 @@
 {
   "name": "yardtp-datetimepicker",
-  "version": "1.1.0",
-  "homepage": "https://www.npmjs.com/package/yardtp-datetimepicker",
+  "version": "1.1.1",
+  "homepage": "https://nuclearhorsestudios.github.io/yardtp-datetimepicker/",
   "description": "Yet Another React Datetime Picker",
   "author": "Michael Lasky",
   "license": "MIT",
@@ -37,8 +37,6 @@
     "cross-env": "^5.1.4",
     "gh-pages": "^1.2.0",
     "node-sass": "^4.11.0",
-    "react": "16.8.2",
-    "react-dom": "16.8.2",
     "rollup": "^0.64.1",
     "rollup-plugin-babel": "^3.0.7",
     "rollup-plugin-commonjs": "^9.1.3",

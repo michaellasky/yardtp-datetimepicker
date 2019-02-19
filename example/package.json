@@ -6,12 +6,14 @@
   "main": "index.js",
   "license": "MIT",
   "jest": {
-    "snapshotSerializers": ["jss-snapshot-serializer"]
+    "snapshotSerializers": [
+      "jss-snapshot-serializer"
+    ]
   },
   "dependencies": {
     "prop-types": "^15.7.2",
     "react-scripts": "^2.1.5",
-    "yardtp-datetimepicker": "^1.0.12"
+    "yardtp-datetimepicker": "^1.1.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -25,16 +27,15 @@
     "not ie <= 11",
     "not op_mini all"
   ],
-  "peerDependencies": {
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1"
-  },
+  "peerDependencies": {},
   "devDependencies": {
     "classnames": "^2.2.6",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.9.1",
     "jss-snapshot-serializer": "^1.0.0",
-    "luxon": "^1.11.2",
-    "node-sass": "^4.11.0"
+    "luxon": "^1.11.3",
+    "node-sass": "^4.11.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   }
 }
