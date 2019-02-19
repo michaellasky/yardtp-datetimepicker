@@ -1,7 +1,7 @@
 import React from 'react';
 import { CalendarDay, defStyles } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import { DateTime, Duration, Interval } from 'luxon';
 import injectSheet from 'react-jss';
 
@@ -25,7 +25,7 @@ describe('<CalendarDay />', () => {
     });
 
     function mountComponent(props) {
-        wrapper = mount(<CalendarDay {...props} />);
+        wrapper = shallow(<CalendarDay {...props} />);
     } 
 
     it ('Renders without crashing', () => {

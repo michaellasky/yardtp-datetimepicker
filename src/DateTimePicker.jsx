@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { DateTime, Duration, Interval } from 'luxon';
 import defaultStyles from './defaultStyles';
 import injectSheet from 'react-jss';
-import classnames from 'classnames';
 
 export const MAX_DATE = DateTime.fromMillis(253402300799999);
 export const MIN_DATE = DateTime.fromMillis(0);
@@ -94,17 +93,15 @@ export function CalendarDay (props) {
     const isInRange      = validDates.start.startOf('day') < value &&
                            validDates.end.endOf('day') > value;           
     
-    const classNames = classnames(
-        classes.calendarDay, 
-        {[`${classes.inRangeDay}`]:       isInRange                    },
-        {[`${classes.outOfRangeDay}`]:    !isInRange                   },
-        {[`${classes.currentMonthDay}`]:  !isPrevMonth && !isNextMonth },
-        {[`${classes.previousMonthDay}`]: isPrevMonth                  },
-        {[`${classes.nextMonthDay}`]:     isNextMonth                  },
-        {[`${classes.presentDay}`]:       isPresent                    },
-        {[`${classes.selectedDay}`]:      isSelected                   }
-    );
-
+    const classNames = `
+        ${classes.calendarDay} 
+        ${isInRange? classes.inRangeDay: classes.outOfRangeDay} 
+        ${!isPrevMonth && !isNextMonth? classes.currentMonthDay: ''} 
+        ${isPrevMonth? classes.previousMonthDay: ''} 
+        ${isNextMonth? classes.nextMonthDay: ''} 
+        ${isPresent? classes.presentDay: ''} 
+        ${isSelected? classes.selectedDay: ''}`;
+    
     return (
         <label className={classNames}>
             <span>{value.day}</span>

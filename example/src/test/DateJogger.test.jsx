@@ -1,7 +1,7 @@
 import React from 'react';
 import { DateJogger } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import { DateTime, Duration } from 'luxon';
 
 let wrapper;
@@ -17,7 +17,7 @@ describe('<DateJogger />', () => {
     });
 
     function mountComponent(props) {
-        wrapper = mount(<DateJogger {...props} />);
+        wrapper = shallow(<DateJogger {...props} />);
     } 
 
     it ('Renders without crashing', () => {
