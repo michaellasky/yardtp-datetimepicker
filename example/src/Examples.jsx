@@ -93,7 +93,7 @@ export default function Example1 (props) {
 
         <h4>TimePicker</h4>
         <p>
-          Things are generally the same for the timepicker  
+          Things are generally the same for the timepicker, except TimePicker doesn't need the calendarValue and setCalendarValue functions.  No harm in passing them though.  
         </p>
         <div className="example-container">
           <pre>{`
@@ -272,6 +272,7 @@ export default function Example7 (props) {
         <h2 id="styling">Styling</h2>
 
         <p>Styling is handled by passing props.style and object to override default styles</p>
+        <p>See /src/defaultStyles.js for all the default styles that can be overridden</p>
         <div className="example-container">
           <pre>{`
 // See Example.8.jsx
@@ -298,6 +299,48 @@ export default function Example8 (props) {
           <div>
             <Example8 />
           </div>
+
+          <p>The Following can be overridden</p>
+          <dl>
+            <dt>calendarDay</dt>
+            <dd>Applies to all days</dd>
+
+            <dt>currentMonthDay</dt>
+            <dd>Applies to days in the same month as the calendarValue state prop</dd>
+
+            <dt>outOfRangeDay</dt>
+            <dd>Applies to days that arent selectable because they're before props.earliestDate or after props.latestDate</dd>
+
+            <dt>inRangeDay</dt>
+            <dd>Applies to days that are selectable because they're after props.earliestDate and before props.latestDate</dd>
+
+            <dt>previousMonthDay</dt>
+            <dd>Applies to days in the month prior to the month passed as the 3rd value of the state prop </dd>
+
+            <dt>nextMonthDay</dt>
+            <dd>Applies to days in the month after to the month passed as the 3rd value of the state prop </dd>
+
+            <dt>presentDay</dt>
+            <dd>Applies to the day that matches DateTime.local()  (today)</dd>
+
+            <dt>selectedDay</dt>
+            <dd>Applies to the currently selected day, which passed as the first value of the state prop</dd>
+          
+            <dt>monthYearHeading</dt>
+            <dd>Applies to the display of the month and year in the heading of the calendar.</dd>
+
+            <dt>monthYearButton</dt>
+            <dd>Applies to the increment and decrement month buttons</dd>
+
+            <dt>timeDisplay</dt>
+            <dd>Applies to the time shown in the TimePicker</dd>
+
+            <dt>timeButton</dt>
+            <dd>Applies to the increment and decrement time buttons in the TimePicker</dd>
+
+            <dt>weekDayName</dt>
+            <dd>Applies to the names of the week days above the calendar days.  Mon, Tues, Wed, etc</dd>
+          </dl>
         </div>
       </div>
     );
