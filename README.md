@@ -64,6 +64,9 @@ The props listed below can be passed to DateTimePicker and will be passed throug
 | intervalStep      | 15      | Number of minutes to advance or retreat the selected time. 
 | format    	    | "t"     | Format that gets passed to luxon's toFormat method when displaying the time.  See: [Luxon Table of Tokens](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens)
 
+## Styling
+See: [https://nuclearhorsestudios.github.io/yardtp-datetimepicker/#styling](https://nuclearhorsestudios.github.io/yardtp-datetimepicker/#styling)
+
 ## License
 
 MIT © [Michael Lasky](https://github.com/NuclearHorseStudios)
