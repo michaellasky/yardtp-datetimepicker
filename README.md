@@ -13,11 +13,11 @@
 npm install --save yardtp-datetimepicker
 ```
 ## Dependencies
-* luxon [![Version](http://img.shields.io/npm/v/luxon.svg?style=flat)](https://npmjs.org/package/luxon)
-* react-jss [![Version](http://img.shields.io/npm/v/react-jss.svg?style=flat)](https://www.npmjs.com/package/react-jss)
+* [![Version](http://img.shields.io/npm/v/luxon.svg?style=flat)](https://npmjs.org/package/luxon) luxon
+* [![Version](http://img.shields.io/npm/v/react-jss.svg?style=flat)](https://www.npmjs.com/package/react-jss) react-jss
 
 ## Peer Dependencies
-* React 16.8+ (hooks) [![npm version](http://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react)
+* [![npm version](http://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) React 16.8+ (hooks)
 
 ## Usage
 [Go to Live Examples](https://nuclearhorsestudios.github.io/yardtp-datetimepicker/)
