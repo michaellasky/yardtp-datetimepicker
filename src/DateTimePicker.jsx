@@ -46,13 +46,13 @@ export function DatePicker (props) {
                 key: dayNumber, 
                 state: [value, (v) => { setCalValue(v); setValue(v);}],
                 value: firstCalDay.plus(timeFromDayZero), 
-                calValue, earliestDate, latestDate, dayNum, weekNum
+                calValue, validDates, dayNum, weekNum
             } } />;
         });
     });
 
     const StyledDayName = injectSheet (style) (({classes, children}) =>
-        <h4 className={classes.weekDayName}>{children}></h4>
+        <h4 className={classes.weekDayName}>{children}</h4>
     );
 
     // ["Mon", "Tues", "Wed",...] starting from locale's first day of week
@@ -83,16 +83,16 @@ export function CalendarDay (props) {
 
     const value          = props.value        || now;
     const calValue       = props.calValue     || value;
-    const earliestDate   = props.earliestDate || MIN_DATE;
-    const latestDate     = props.latestDate   || MAX_DATE; 
     const classes        = props.classes      || {};
-    const validDays      = Interval.fromDateTimes(earliestDate, latestDate);  
+    const minMaxDates    = Interval.fromDateTimes(MIN_DATE, MAX_DATE);
+    const validDates     = props.validDates   || minMaxDates;
+
     const isSelected     = value.toFormat('D') === selectedValue.toFormat('D');
     const isPrevMonth    = value < calValue.startOf('month');
     const isNextMonth    = value > calValue.endOf('month');
     const isPresent      = value.toFormat('yo') === now.toFormat('yo');
-    const isInRange      = validDays.start.startOf('day') < value &&
-                           validDays.end.endOf('day') > value;           
+    const isInRange      = validDates.start.startOf('day') < value &&
+                           validDates.end.endOf('day') > value;           
     
     const classNames = classnames(
         classes.calendarDay, 
@@ -108,81 +108,114 @@ export function CalendarDay (props) {
     return (
         <label className={classNames}>
             <span>{value.day}</span>
-            <input {...{ type: "radio", defaultChecked: isSelected, 
-                onChange: () => setSelectedValue(value), value: value,   
-                className: classes.srOnly, name: "datepicker-day" } }  />
+            <input {...{ 
+                type: "radio", 
+                defaultChecked: isSelected, 
+                onChange: () => setSelectedValue(value), 
+                value: value,   
+                className: classes.srOnly, 
+                name: "datepicker-day",
+                disabled: !isInRange } } />
         </label>
     );
 }
 
 export function MonthYearPicker (props) {
     const [ , , value, setValue] = props.state || useDatePickerState();
-    const monthStr = value.toFormat(props.monthFormat || 'MMMM');
-    const yearStr  = value.toFormat(props.yearFormat || 'yyyy');
-    const oneMonth = Duration.fromObject({'month': 1});
-    
-    const StyledMonthYearPicker = injectSheet (props.style) (({ classes }) => 
-        <div className={classes.monthSelect}>
-            <label> 
-                <span className={classes.srOnly}>Previous Month</span>
-                <button 
-                    className={classes.monthYearButton} 
-                    onClick={() => setValue(value.minus(oneMonth))} 
-                >&lt;</button>
-            </label>
-            <h3 className={classes.monthYearHeading}>{monthStr} {yearStr}</h3>
-            <label> 
-                <span className={classes.srOnly}>Next Month</span>
-                <button 
-                    className={classes.monthYearButton} 
-                    onClick={() => setValue(value.plus(oneMonth))} 
-                >&gt;</button>
-            </label>
-        </div>
-    );
+    const month         = value.toFormat(props.monthFormat || 'MMMM');
+    const year          = value.toFormat(props.yearFormat || 'yyyy');
+    const increaseLabel = props.increaseLabel || "Next Month";
+    const decreaseLabel = props.decreaseLabel || "Previous Month";
+
+    const StyledMonthYearPicker = injectSheet (props.style) ((props) => { 
+        const classes = {
+            ...props.classes, 
+            button: props.classes.monthYearButton,
+            container: props.classes.monthSelect
+        };
+        const dateJoggerProps = {
+            ...props,
+            intervalStep: 1, timeUnit: 'month', 
+            state: [value, setValue], 
+            classes, increaseLabel, decreaseLabel
+        };
+        
+        return (
+            <DateJogger {...dateJoggerProps}>
+                <h3 className={classes.monthYearHeading}>{month} {year}</h3>
+            </DateJogger>
+        );
+    });
 
     return <StyledMonthYearPicker />;
 }
 
 export function TimePicker (props) {
-    const [value, setValue] = props.state || useState(DateTime.local());
-    const style             = {...defaultStyles, ...props.style};
-    const restrictTimeToDay = props.restrictTimeToDay !== false;
-    const interval          = props.intervalStep || 15;
-    const format            = props.format       || 't';
-    
-    function restrictTime (t, v = value) {
+    const style             = { ...defaultStyles, ...props.style };
+    const [value, setValue] = props.state         || useDatePickerState();
+    const restrictTime      = props.restrictTimeToDay !== false;
+    const fmt               = props.format        || 't';
+    const increaseLabel     = props.increaseLabel || "Increase Time";
+    const decreaseLabel     = props.decreaseLabel || "Decrease Time";
+
+    function restrict (t, v = value) {
         return DateTime.local(v.year, v.month, v.day, t.hour, t.minute);
     } 
 
-    function addMinutes(num) {
-        const timeDelta = num - ((~~(value.minute) % interval));
-        const time = value.plus(Duration.fromObject({'minutes': timeDelta}));
-
-        return restrictTimeToDay? setValue(restrictTime(time)): setValue(time);
-    }
+    const setVal = (v) => restrictTime? setValue(restrict(v)): setValue(v);
     
-    const StyledTimePicker = injectSheet (style) (({ classes }) => 
-        <div className={classes.timePicker}>
-            <label>
-                <span className={classes.srOnly}>Decrease Time</span>
-                <button
-                    className={classes.timeButton}
-                    onClick={() => addMinutes(-interval)} 
-                >&lt;</button>
+    const StyledTimePicker = injectSheet (style) ((props) => {
+        const classes = {
+            ...props.classes, 
+            button: props.classes.timeButton, 
+            container: props.classes.timePicker 
+        };
+        const dateJoggerProps = {
+            ...props, 
+            state: [value, setVal], 
+            classes, increaseLabel, decreaseLabel
+        };
+        
+        return (
+            <DateJogger {...dateJoggerProps}>
+              <div className={classes.timeDisplay}>{value.toFormat(fmt)}</div>
+            </DateJogger>
+        );
+    });
+
+    return <StyledTimePicker />;
+}
+
+export function DateJogger (props) {
+    const [value, setValue] = props.state         || useDatePickerState();
+    const classes           = props.classes       || {};
+    const interval          = props.intervalStep  || 15;
+    const timeUnit          = props.timeUnit      || 'minute';
+
+    function jog(reverse = false) {
+        const num = reverse? -interval: interval;
+        const delta = num - ((~~(value[timeUnit]) % interval));
+
+        setValue(value.plus(Duration.fromObject({[`${timeUnit}s`]: delta})));
+    }
+
+    return (
+        <div className={classes.container}>
+            <label name="decrement">
+                <span className={classes.srOnly}>{props.decreaseLabel}</span>
+                <button className={classes.button} onClick={() => jog(true)} >
+                    &lt;
+                </button>
             </label>
-            <div className={classes.timeDisplay}>{value.toFormat(format)}</div>
-            <label>
-                <span className={classes.srOnly}>Increase Time</span>
-                <button
-                    className={classes.timeButton}
-                    onClick={() => addMinutes(interval)} 
-                >&gt;</button>
+            {props.children}
+            <label name="increment">
+                <span className={classes.srOnly}>{props.increaseLabel}</span>
+                <button className={classes.button} onClick={() => jog(false)}>
+                    &gt;
+                </button>
             </label>
         </div>
     );
-
-    return <StyledTimePicker />;
 }
 
 export const defStyles = defaultStyles;

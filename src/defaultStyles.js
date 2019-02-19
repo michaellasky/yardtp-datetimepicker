@@ -6,12 +6,16 @@ const defaultStyles = {
         borderRadius: "0.5em",
         textAlign: "center"
     },
-    outOfRangeDay: {
-        cursor: "default",
-        color: "#818181",
-        backgroundColor: "#d3d3d3"
+    currentMonthDay: {
+        backgroundColor: "#a7c1b5",
+        color: "#000000"
     },
-    inRangeDay: {},
+   
+    outOfRangeDay: {
+        cursor: "default !important",
+        color: "#f3f3f3",
+        backgroundColor: "#999999"
+    },
     previousMonthDay: {
         color: "#818181",
         backgroundColor: "#e3e3e3"
@@ -20,10 +24,7 @@ const defaultStyles = {
         color: "#818181",
         backgroundColor: "#e3e3e3"
     },
-    currentMonthDay: {
-        backgroundColor: "#a7c1b5",
-        color: "#000000"
-    },
+    inRangeDay: {},
     presentDay: {
         color: "#333333",
         backgroundColor: "#97b1a5"

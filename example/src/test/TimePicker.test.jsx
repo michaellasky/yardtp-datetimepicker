@@ -2,7 +2,7 @@ import React from 'react';
 import { TimePicker } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount } from 'enzyme';
-import { DateTime, Duration } from 'luxon';
+import { DateTime } from 'luxon';
 
 let wrapper;
         
@@ -28,16 +28,10 @@ describe('<TimePicker />', () => {
 
         const setValue = jest.fn();
         mountComponent({
-            intervalStep: 15,
-            state: [
-                DateTime.local(2015, 12, 15, 12, 15),
-                setValue,
-                DateTime.local(2015, 12, 15, 12, 15),
-                jest.fn()
-            ]
+            state: [DateTime.local(2015, 12, 15, 12, 15), setValue]
         });
 
-        wrapper.find('button.increase-time-button').simulate('click');
+        wrapper.find('label[name="increment"] > button').simulate('click');
 
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(DateTime.local(2015, 12, 15, 12, 30));
@@ -48,16 +42,10 @@ describe('<TimePicker />', () => {
 
         const setValue = jest.fn();
         mountComponent({
-            intervalStep: 15,
-            state: [
-                DateTime.local(2015, 12, 15, 12, 15),
-                setValue,
-                DateTime.local(2015, 12, 15, 12, 15),
-                jest.fn()
-            ],
+            state: [DateTime.local(2015, 12, 15, 12, 15), setValue]
         });
         
-        wrapper.find('button.decrease-time-button').simulate('click');
+        wrapper.find('label[name="decrement"] > button').simulate('click');
 
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(DateTime.local(2015, 12, 15, 12));
@@ -67,51 +55,33 @@ describe('<TimePicker />', () => {
     it('Cycles within the same day when props.restrictToDay is true', () => {
         let setValue = jest.fn();
         mountComponent({
-            intervalStep: 15,
-            state: [
-                DateTime.local(2015, 12, 15, 23, 45),
-                setValue,
-                DateTime.local(2015, 12, 15, 23, 45),
-                jest.fn()
-            ],
+            state: [DateTime.local(2015, 12, 15, 23, 45), setValue],
             restrictTimeToDay: true
         });
 
-        wrapper.find('button.increase-time-button').simulate('click');
+        wrapper.find('label[name="increment"] > button').simulate('click');
 
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(DateTime.local(2015, 12, 15, 0));
         
         setValue = jest.fn();
         mountComponent({
-            intervalStep: 15,
-            state: [
-                DateTime.local(2015, 12, 15),
-                setValue,
-                DateTime.local(2015, 12, 15),
-                jest.fn()
-            ],
+            state: [DateTime.local(2015, 12, 15), setValue],
             restrictTimeToDay: true
         });
 
-        wrapper.find('button.decrease-time-button').simulate('click');
+        wrapper.find('label[name="decrement"] > button').simulate('click');
 
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(DateTime.local(2015, 12, 15, 23, 45));
         
         setValue = jest.fn();
         mountComponent({
-            intervalStep: 15,
-            state: [
-                DateTime.local(2015, 12, 15, 23, 45),
-                setValue,
-                DateTime.local(2015, 12, 15, 23, 45),
-                jest.fn()
-            ],
+            state: [DateTime.local(2015, 12, 15, 23, 45), setValue],
             restrictTimeToDay: false
         });
 
-        wrapper.find('button.increase-time-button').simulate('click');
+        wrapper.find('label[name="increment"] > button').simulate('click');
 
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(DateTime.local(2015, 12, 16));
@@ -119,17 +89,11 @@ describe('<TimePicker />', () => {
 
         setValue = jest.fn();
         mountComponent({
-            intervalStep: 15,
-            state: [
-                DateTime.local(2015, 12, 15),
-                setValue,
-                DateTime.local(2015, 12, 15),
-                jest.fn()
-            ],
+            state: [DateTime.local(2015, 12, 15), setValue],
             restrictTimeToDay: false
         });
 
-        wrapper.find('button.decrease-time-button').simulate('click');
+        wrapper.find('label[name="decrement"] > button').simulate('click');
 
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(DateTime.local(2015, 12, 14, 23, 45));
