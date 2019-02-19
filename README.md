@@ -1,8 +1,9 @@
 
 
+
 # yardtp-datetimepicker - Yet Another React Datetime Picker
 
-> yardtp-datetimepicker is a Datetime Picker component for React 16.8+ focusing on simplicity and accessiblity. 
+> yardtp-datetimepicker is a blazingly unbenchmarked Datetime Picker component for React 16.8+ focusing on simplicity and accessiblity. 
 
 [![NPM](https://img.shields.io/npm/v/yardtp-datetimepicker.svg)](https://www.npmjs.com/package/yardtp-datetimepicker) 
 
@@ -43,7 +44,9 @@ export default YarDTPExample  {
 ### DateTimePicker 
 | Name              | Default    |  |
 | ----------------- |:----------:| -
-| state             |            | This is an array containing: [selected datetime, set selected datetime function, calendar display datetime, set calendar display datetime function. ]  This is passed through to both DatePicker and TimePicker, and is therefor common to both.
+| state             |            | This is an array containing: [selected datetime, set selected datetime function, calendar display datetime, set calendar display datetime function. ]  You can create this via the helper function useDatePickerState, or by spreading two useState calls ([...useState(selectedDateTime), ....useState(calendarDateTime)]).  State is passed through to both DatePicker and TimePicker, and is therefor common to both.
+     
+The props listed below can be passed to DateTimePicker and will be passed through to  DatePicker and TimePicker.
 
 ### DatePicker
 | Name              | Default    |  |

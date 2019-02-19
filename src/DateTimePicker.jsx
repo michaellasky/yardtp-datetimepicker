@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { DateTime, Duration, Interval } from 'luxon';
-import classNames from 'classnames';
+import defaultStyles from './defaultStyles';
+import injectSheet from 'react-jss';
+import classnames from 'classnames';
 
 export const MAX_DATE = DateTime.fromMillis(253402300799999);
 export const MIN_DATE = DateTime.fromMillis(0);
@@ -11,138 +13,140 @@ export function useDatePickerState (value, calVal) {
 }
 
 export default function DateTimePicker (props) {
-    return (
-        <div className="yardtp-datetimepicker">
-        <DatePicker {...props} /> <TimePicker {...props} />
-        </div>
-    );
-}
+    return<div><DatePicker {...props} /> <TimePicker {...props} /></div>;
+} 
 
 export function DatePicker (props) {
-    const [value, setValue, calValue, setCalValue] = props.state || 
-                                                     useDatePickerState();
+    const state = props.state || useDatePickerState();
+    const [value, setValue, calValue, setCalValue] = state;
+
     const earliestDate  = props.earliestDate || MIN_DATE;
     const latestDate    = props.latestDate   || MAX_DATE;
+    const style         = {...defaultStyles, ...props.style};
     const validDates    = Interval.fromDateTimes(earliestDate, latestDate);
     const monthStart    = calValue.startOf('month');
     const weekdayOf1st  = Duration.fromObject({days: monthStart.weekday});
     const firstCalDay   = monthStart.minus(weekdayOf1st); 
-    
+
+    const StyledDay = injectSheet (style) ((p) => <CalendarDay {...p} />);
+
     // Each calendar week
     const weeks = [...Array(6).keys()].map((weekNum) => {
         
         // Each day in that week
-        return [...Array(7).keys()].map((dayInWeek) => {
-            const dayNumber = weekNum * 7 + dayInWeek;
+        return [...Array(7).keys()].map((dayNum) => {
+            const dayNumber = weekNum * 7 + dayNum;
             const timeFromDayZero = Duration.fromObject({
                 days: dayNumber,
                 hours: value.hour, 
                 minutes: value.minute
             });            
 
-            return (
-                <CalendarDay {...{
-                    className: `day day-${dayInWeek+1} week-${weekNum+1}`,
-                    key: dayNumber,
-                    state: [value, (v) => { setCalValue(v); setValue(v);}],
-                    value: firstCalDay.plus(timeFromDayZero), 
-                    calValue: calValue,
-                    earliestDate: earliestDate,
-                    latestDate: latestDate,
-                } } />
-            );
+            return <StyledDay {...{
+                key: dayNumber, 
+                state: [value, (v) => { setCalValue(v); setValue(v);}],
+                value: firstCalDay.plus(timeFromDayZero), 
+                calValue, earliestDate, latestDate, dayNum, weekNum
+            } } />;
         });
     });
 
-    // ["Mon", "Tues", "Wed",...] localized and wrapped in h4
+    const StyledDayName = injectSheet (style) (({classes, children}) =>
+        <h4 className={classes.weekDayName}>{children}></h4>
+    );
+
+    // ["Mon", "Tues", "Wed",...] starting from locale's first day of week
     const dayNames = [...Array(7).keys()].map((weekDayNumber) => {
         const weekStartDelta = Duration.fromObject({days: weekDayNumber});
         const dayName = firstCalDay.plus(weekStartDelta).toFormat('EEE');
         
-        return <h4 key={dayName}>{dayName}</h4>
+        return <StyledDayName key={dayName}>{dayName}</StyledDayName>;
     });
+
+    const StyledDatePicker = injectSheet(style) ((props) => 
+        <div className={props.classes.datePicker}>
+            <MonthYearPicker {...{...props, state, style }} />
+            <div className={props.classes.dayNameHeadings}>{dayNames}</div>
+            <div className={props.classes.calendarDays}>{weeks}</div>
+        </div>
+    );
 
     if      (validDates.start > value) { setValue(validDates.start); }
     else if (validDates.end   < value) { setValue(validDates.end);   }
 
-    return (
-        <div className="yardtp-datepicker">
-            <MonthYearPicker {...{...props, state: [calValue, setCalValue]}} />
-            <div className="day-name-headings">{dayNames}</div>
-            <div className="calendar-days">{weeks}</div>
-        </div>
-    );
+    return <StyledDatePicker {...props} />;
 }
 
 export function CalendarDay (props) {
     const now = DateTime.local();
     const [selectedValue, setSelectedValue] = props.state || useState(now);
-    const value         = props.value        || now;
-    const calendarValue = props.calValue     || value;
-    const earliestDate  = props.earliestDate || MIN_DATE;
-    const latestDate    = props.latestDate   || MAX_DATE;
-    const selected      = value.toFormat('D') === selectedValue.toFormat('D');
-    const validDays     = Interval.fromDateTimes(earliestDate, latestDate);  
-    const inRange       = validDays.start.startOf('day') < value &&
-                          validDays.end.endOf('day') > value;
-                          
-    const classes = classNames(
-        props.className, 
-        { 
-            "selected":       selected,
-            "selectable":     inRange,
-            "out-of-range":   !inRange,
-            "previous-month": value < calendarValue.startOf('month'),
-            "current-month":  value.month === calendarValue.month,
-            "next-month":     value > calendarValue.endOf('month'),
-            "past":           value < now && value.day !== now.day,
-            "present":        value.toFormat('yo') === now.toFormat('yo'),
-            "future":         value > now && value.day !== now.day 
-        }
+
+    const value          = props.value        || now;
+    const calValue       = props.calValue     || value;
+    const earliestDate   = props.earliestDate || MIN_DATE;
+    const latestDate     = props.latestDate   || MAX_DATE; 
+    const classes        = props.classes      || {};
+    const validDays      = Interval.fromDateTimes(earliestDate, latestDate);  
+    const isSelected     = value.toFormat('D') === selectedValue.toFormat('D');
+    const isPrevMonth    = value < calValue.startOf('month');
+    const isNextMonth    = value > calValue.endOf('month');
+    const isPresent      = value.toFormat('yo') === now.toFormat('yo');
+    const isInRange      = validDays.start.startOf('day') < value &&
+                           validDays.end.endOf('day') > value;           
+    
+    const classNames = classnames(
+        classes.calendarDay, 
+        {[`${classes.inRangeDay}`]:       isInRange                    },
+        {[`${classes.outOfRangeDay}`]:    !isInRange                   },
+        {[`${classes.currentMonthDay}`]:  !isPrevMonth && !isNextMonth },
+        {[`${classes.previousMonthDay}`]: isPrevMonth                  },
+        {[`${classes.nextMonthDay}`]:     isNextMonth                  },
+        {[`${classes.presentDay}`]:       isPresent                    },
+        {[`${classes.selectedDay}`]:      isSelected                   }
     );
 
-    return ( 
-        <label className={classes}>
+    return (
+        <label className={classNames}>
             <span>{value.day}</span>
-            <input type="radio" 
-                className="sr-only"
-                onChange={() => setSelectedValue(value)} 
-                selected={selected}
-                name="datepicker-day"  
-                value={value} />
+            <input {...{ type: "radio", defaultChecked: isSelected, 
+                onChange: () => setSelectedValue(value), value: value,   
+                className: classes.srOnly, name: "datepicker-day" } }  />
         </label>
     );
 }
 
 export function MonthYearPicker (props) {
-    const [value, setValue] = props.state || useState(DateTime.local());
+    const [ , , value, setValue] = props.state || useDatePickerState();
     const monthStr = value.toFormat(props.monthFormat || 'MMMM');
     const yearStr  = value.toFormat(props.yearFormat || 'yyyy');
     const oneMonth = Duration.fromObject({'month': 1});
     
-    return (
-        <div className="month-select">
+    const StyledMonthYearPicker = injectSheet (props.style) (({ classes }) => 
+        <div className={classes.monthSelect}>
             <label> 
-                <span className="sr-only">Previous Month</span>
+                <span className={classes.srOnly}>Previous Month</span>
                 <button 
-                    className="prev-month-button" 
+                    className={classes.monthYearButton} 
                     onClick={() => setValue(value.minus(oneMonth))} 
                 >&lt;</button>
             </label>
-            <h3 className="month-year">{monthStr} {yearStr}</h3>
+            <h3 className={classes.monthYearHeading}>{monthStr} {yearStr}</h3>
             <label> 
-                <span className="sr-only">Next Month</span>
+                <span className={classes.srOnly}>Next Month</span>
                 <button 
-                    className="next-month-button" 
+                    className={classes.monthYearButton} 
                     onClick={() => setValue(value.plus(oneMonth))} 
                 >&gt;</button>
             </label>
         </div>
     );
+
+    return <StyledMonthYearPicker />;
 }
 
 export function TimePicker (props) {
     const [value, setValue] = props.state || useState(DateTime.local());
+    const style             = {...defaultStyles, ...props.style};
     const restrictTimeToDay = props.restrictTimeToDay !== false;
     const interval          = props.intervalStep || 15;
     const format            = props.format       || 't';
@@ -152,30 +156,33 @@ export function TimePicker (props) {
     } 
 
     function addMinutes(num) {
-        const overflow = (~~(value.minute) % interval);
-        const addedMinutes = Duration.fromObject({'minutes': num-overflow});
-        const time = value.plus(addedMinutes);
+        const timeDelta = num - ((~~(value.minute) % interval));
+        const time = value.plus(Duration.fromObject({'minutes': timeDelta}));
 
         return restrictTimeToDay? setValue(restrictTime(time)): setValue(time);
     }
     
-    return (
-        <div className="yardtp-timepicker">
+    const StyledTimePicker = injectSheet (style) (({ classes }) => 
+        <div className={classes.timePicker}>
             <label>
-                <span className="sr-only">Decrease Time</span>
+                <span className={classes.srOnly}>Decrease Time</span>
                 <button
-                    className="decrease-time-button"
+                    className={classes.timeButton}
                     onClick={() => addMinutes(-interval)} 
                 >&lt;</button>
             </label>
-            <div className="time-display">{value.toFormat(format)}</div>
+            <div className={classes.timeDisplay}>{value.toFormat(format)}</div>
             <label>
-                <span className="sr-only">Increase Time</span>
+                <span className={classes.srOnly}>Increase Time</span>
                 <button
-                    className="increase-time-button"
+                    className={classes.timeButton}
                     onClick={() => addMinutes(interval)} 
                 >&gt;</button>
             </label>
         </div>
     );
+
+    return <StyledTimePicker />;
 }
+
+export const defStyles = defaultStyles;

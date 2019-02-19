@@ -9,8 +9,7 @@ import Example4 from './examples/Example.4';
 import Example5 from './examples/Example.5';
 import Example6 from './examples/Example.6';
 import Example7 from './examples/Example.7';
-
-import './yardtp-datetimepicker.scss';
+import Example8 from './examples/Example.8';
 
 import './index.css';
 
@@ -272,61 +271,34 @@ export default function Example7 (props) {
 
         <h2 id="styling">Styling</h2>
 
-        <h5>See: yardtp-datetimepicker/example/src/yardtp-datetimepicker.scss</h5>
-        <p>
-          The scss is organized into 3 main files, all in yardtp-datetimepicker/src/scss/:
-        </p>
-        <dl>
+        <p>Styling is handled by passing props.style and object to override default styles</p>
+        <div className="example-container">
+          <pre>{`
+// See Example.8.jsx
+export default function Example8 (props) {
 
-        <dt>Variables.scss</dt>
-          <dd>This file contains all the Variables used in the other two files.
-              Override these variables for some quick and easy styling, overriding 
-              basic colors and some padding values.
-          </dd>
-          
-          <dt>Mixins.scss</dt>
-          <dd>This file contains all the mixins that describe the more visual 
-              aspects of the styling.  Backgrounds, colors, fonts, etc.  Override 
-              these mixins for more control over the rendering.
-          </dd>
-
-          <dt>Base.scss</dt>
-          <dd>The primary css for the pickers.  Handles all the "structural" aspects 
-              the styling, css-grid values and what not. Applies mixins from
-              Mixins.scss.  
-          </dd>
-        </dl>
-
-        <h4>Example</h4>
-        <p>Below is an example of loading all 3 files, overriding options along the way</p>
-        <pre>
-{`
-@import '../node_modules/yardtp-datetimepicker/dist/scss/Variables.scss';
-
-// Example of overriding color variables 
-// See Variables.scss for all variables
-// ---------------------------------
-$primaryColor: #ff0000;
-$secondaryColor: #00ff00;
-$disabledColor: #333333;
-
-
-@import '../node_modules/yardtp-datetimepicker/dist/scss/Mixins.scss';
-
-
-// Example of overriding a mixin 
-// See Mixins.scss for all mixins
-// ---------------------------------
-
-@mixin time-display {
-    text-align: right;
-    font-size: 80%;
-    color: $primaryColor;
+  const hotDogStandStyle = {
+      selectedDay: {
+          backgroundColor: "#ffff55",
+          color: "#ff0000",
+      },
+      currentMonthDay: {
+          backgroundColor: "#ff0000",
+          color: "#ffff00",
+          borderRadius: "1em"
+      }
+  } 
+  return (
+      <>
+      <DateTimePicker style={hotDogStandStyle} />
+      </>
+  );
 }
-
-@import '../node_modules/yardtp-datetimepicker/dist/scss/Base.scss';
-`}
-        </pre>
+          `}</pre>
+          <div>
+            <Example8 />
+          </div>
+        </div>
       </div>
     );
 }

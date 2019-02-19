@@ -1,8 +1,9 @@
 import React from 'react';
-import { DatePicker, MonthYearPicker, CalendarDay } from 'yardtp-datetimepicker';
+import { DatePicker, MonthYearPicker, CalendarDay, defStyles } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
-import Enzyme, { mount } from 'enzyme';
+import Enzyme, { mount, shallow } from 'enzyme';
 import { DateTime, Duration } from 'luxon';
+import injectSheet from 'react-jss';
 
 let wrapper;
         
@@ -128,124 +129,124 @@ describe('<CalendarDay />', () => {
         expect(setSelVal.mock.calls[0][0]).toEqual(now);
     });
 
-    it('Adds .selectable to values within the selectable range', () => {
-        mountComponent({
-            value: now, 
-            latestDate: tomorrow,
-            earliestDate: yesterday 
+    it('Adds dynamic inRangeDay class to dates within the selectable range', () => {
+
+        let inRangeDayClass;
+        const Styled = injectSheet (defStyles) ((props) => {
+            inRangeDayClass = props.classes.inRangeDay;
+            return <CalendarDay {...props} />;
         });
 
-        expect(wrapper.find('label.selectable').exists()).toBe(true);
+        let props = {value: now, latestDate: tomorrow, earliestDate: yesterday };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${inRangeDayClass}`).exists()).toBe(true);
 
-        mountComponent({
-            value: tomorrow,  
-            latestDate: now,
-            earliestDate: yesterday 
-        });
+        props = {value: tomorrow, latestDate: now, earliestDate: yesterday };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${inRangeDayClass}`).exists()).toBe(false);
 
-        expect(wrapper.find('label.selectable').exists()).toBe(false);
+        props = {value: now, latestDate: yesterday, earliestDate: yesterday };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${inRangeDayClass}`).exists()).toBe(false);
 
-        mountComponent({
-            value: now,  
-            latestDate: yesterday,
-            earliestDate: yesterday 
-        });
-
-        expect(wrapper.find('label.selectable').exists()).toBe(false);
     });
 
-    it('Adds .out-of-range to values outside the selectable range', () => {
-        mountComponent({
-            value: tomorrow,  
-            latestDate: now,
-            earliestDate: yesterday 
+    it('Adds dynamic outOfRangeDay class to label for days outside the selectable range', () => {
+
+        let outOfRangeClass;
+        const Styled = injectSheet (defStyles) ((props) => {
+            outOfRangeClass = props.classes.outOfRangeDay;
+            return <CalendarDay {...props} />;
         });
 
-        expect(wrapper.find('label.out-of-range').exists()).toBe(true);
+        let props = {value: tomorrow, latestDate: now, earliestDate: yesterday };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${outOfRangeClass}`).exists()).toBe(true);
 
-        mountComponent({
-            value: now,  
-            latestDate: tomorrow,
-            earliestDate: yesterday 
-        });
-
-        expect(wrapper.find('label.out-of-range').exists()).toBe(false);
+        props = {value: now, latestDate: tomorrow, earliestDate: yesterday };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${outOfRangeClass}`).exists()).toBe(false);
     });
 
-    it('Adds class .previous-month to label for days in the month prior to the calValue month', () => {
+    it('Adds dynamic previousMonthDay class to label for days in the month prior to the calValue month', () => {
     
-        mountComponent({calValue: now, value: lastMonth});
-        expect(wrapper.find('label.previous-month').exists()).toBe(true);
+        let prevMonthClass;
+        const Styled = injectSheet (defStyles) ((props) => {
+            prevMonthClass = props.classes.previousMonthDay;
+            return <CalendarDay {...props} />;
+        });
 
-        mountComponent({calValue: now, value: now});
-        expect(wrapper.find('label.previous-month').exists()).toBe(false);
+        let props = {calValue: now, value: lastMonth};
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${prevMonthClass}`).exists()).toBe(true);
 
-        mountComponent({calValue: now, value: nextMonth});
-        expect(wrapper.find('label.previous-month').exists()).toBe(false);
+        props = {calValue: now, value: now};
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${prevMonthClass}`).exists()).toBe(false);
+
+        props = {calValue: now, value: nextMonth};
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${prevMonthClass}`).exists()).toBe(false);
     });
 
-    it('Adds class .current-month to label for days within calValue month', () => {
+    it('Adds dynamic currentMonthDay class to label for days within calValue month', () => {
 
-        mountComponent({calValue: now, value: lastMonth });
-        expect(wrapper.find('label.current-month').exists()).toBe(false);
+        let currentMonthClass;
+        const Styled = injectSheet (defStyles) ((props) => {
+            currentMonthClass = props.classes.currentMonthDay;
+            return <CalendarDay {...props} />;
+        });
 
-        mountComponent({calValue: now, value: now });
-        expect(wrapper.find('label.current-month').exists()).toBe(true);
+        let props = {calValue: now, value: lastMonth };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${currentMonthClass}`).exists()).toBe(false);
 
-        mountComponent({calValue: now, value: nextMonth });
-        expect(wrapper.find('label.current-month').exists()).toBe(false);
+        props = {calValue: now, value: now };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${currentMonthClass}`).exists()).toBe(true);
+
+        props = {calValue: now, value: nextMonth };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${currentMonthClass}`).exists()).toBe(false);
     });
 
-    it('Adds class .next-month to label for days in month after calValue month', () => {
+    it('Adds dynamic nextMonthDay class to label for days in month after calValue month', () => {
 
-        mountComponent({calValue: now, value: lastMonth });
-        expect(wrapper.find('label.next-month').exists()).toBe(false);
+        let nextMonthClass;
+        const Styled = injectSheet (defStyles) ((props) => {
+            nextMonthClass = props.classes.nextMonthDay;
+            return <CalendarDay {...props} />;
+        });
 
-        mountComponent({calValue: now, value: now });
-        expect(wrapper.find('label.next-month').exists()).toBe(false);
+        let props = {calValue: now, value: lastMonth };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${nextMonthClass}`).exists()).toBe(false);
 
-        mountComponent({calValue: now, value: nextMonth });
-        expect(wrapper.find('label.next-month').exists()).toBe(true);
+        props = {calValue: now, value: now };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${nextMonthClass}`).exists()).toBe(false);
+
+        props = {calValue: now, value: nextMonth };
+        wrapper = mount(<Styled {...props} />);
+        expect(wrapper.find(`label.${nextMonthClass}`).exists()).toBe(true);
     });
 
-    it('Adds class .past to days in the past', () => {
-        
+    it('Adds dynamic presentDay class to the current day', () => {
+
         const oneDay = Duration.fromObject({days: 1});
-        
-        mountComponent({value: DateTime.local().minus(oneDay)});
-        expect(wrapper.find('label.past').exists()).toBe(true);
+        let presentDayClass;
+        const Styled = injectSheet (defStyles) ((props) => {
+            presentDayClass = props.classes.presentDay;
+            return <CalendarDay {...props} />;
+        });
 
-        mountComponent({value: DateTime.local()});
-        expect(wrapper.find('label.past').exists()).toBe(false);
+        wrapper = mount(<Styled value={DateTime.local()} />);
+        expect(wrapper.find(`label.${presentDayClass}`).exists()).toBe(true);
 
-        mountComponent({value: DateTime.local().plus(oneDay)});
-        expect(wrapper.find('label.past').exists()).toBe(false);
-    });
+        wrapper = mount(<Styled value={DateTime.local().plus(oneDay)} />);
+        expect(wrapper.find(`label.${presentDayClass}`).exists()).toBe(false);
 
-    it('Adds class .present to the current day', () => {
-
-        const oneDay = Duration.fromObject({days: 1});
-        
-        mountComponent({value: DateTime.local().minus(oneDay)});
-        expect(wrapper.find('label.present').exists()).toBe(false);
-
-        mountComponent({value: DateTime.local()});
-        expect(wrapper.find('label.present').exists()).toBe(true);
-
-        mountComponent({value: DateTime.local().plus(oneDay)});
-        expect(wrapper.find('label.present').exists()).toBe(false);
-    });
-
-    it('Adds class .future to days in the future', () => {
-        
-        const oneDay = Duration.fromObject({days: 1});
-        mountComponent({value: DateTime.local().minus(oneDay)});
-        expect(wrapper.find('label.future').exists()).toBe(false);
-
-        mountComponent({value: DateTime.local()});
-        expect(wrapper.find('label.future').exists()).toBe(false);
-
-        mountComponent({value: DateTime.local().plus(oneDay)});
-        expect(wrapper.find('label.future').exists()).toBe(true);
+        wrapper = mount(<Styled value={DateTime.local().minus(oneDay)} />);
+        expect(wrapper.find(`label.${presentDayClass}`).exists()).toBe(false);
     });
 });
