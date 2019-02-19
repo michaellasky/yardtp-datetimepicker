@@ -70,7 +70,7 @@ describe('<DateJogger />', () => {
         expect(setValue.mock.calls.length).toBe(1);
         expect(setValue.mock.calls[0][0]).toEqual(value.plus(Duration.fromObject({
             years: 2 // 5 years because were between intervalSteps
-                     // so it goes up, but then floors the value to nearest
+                     // so it goes up 5, but then floors the value to nearest
                      // step
         })));
     });

@@ -271,7 +271,7 @@ export default function Example7 (props) {
 
         <h2 id="styling">Styling</h2>
 
-        <p>Styling is handled by passing props.style and object to override default styles</p>
+        <p>Styling is handled by passing props.style an object to override default styles</p>
         <p>See /src/defaultStyles.js for all the default styles that can be overridden</p>
         <div className="example-container">
           <pre>{`
