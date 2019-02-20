@@ -4,7 +4,8 @@ const minButtonHeight = "2em";
 const defaultStyles = {
     calendarDay: {
         borderRadius: "0.5em",
-        textAlign: "center"
+        textAlign: "center",
+        fontWeight: "bold"
     },
     currentMonthDay: {
         backgroundColor: "#a7c1b5",
@@ -74,9 +75,15 @@ const defaultStyles = {
         gridAutoRows: "minmax(1em, auto)",
         marginBottom: "0.5em",
         '& label': {
+            cursor: "pointer"
+        },
+        '& a': {
+            textDecoration: "none",
+            display: "inline-block",
             paddingTop: "25%",
             paddingBottom: "25%",
-            cursor: "pointer"
+            width: "100%",
+            height: "100%"
         }
     },
     monthSelect: {
@@ -96,6 +103,9 @@ const defaultStyles = {
             width: "100%",
             minHeight: minButtonHeight     
         }
+    },
+    transparent: {
+        opacity: 0
     },
     srOnly: {
         position: "absolute",

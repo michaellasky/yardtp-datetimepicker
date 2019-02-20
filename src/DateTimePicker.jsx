@@ -102,17 +102,24 @@ export function CalendarDay (props) {
         ${isPresent? classes.presentDay: ''} 
         ${isSelected? classes.selectedDay: ''}`;
     
+    function selectThisDay() { if (isInRange) { setSelectedValue(value); } }
+
     return (
-        <label className={classNames}>
+        <label >
+            <a href="javascript: return void;"
+               onClick={selectThisDay} 
+               className={classNames}>
             <span>{value.day}</span>
-            <input {...{ 
+            <input {...{  
                 type: "radio", 
                 defaultChecked: isSelected, 
-                onChange: () => setSelectedValue(value), 
                 value: value,   
+                tabIndex: 0,
                 className: classes.srOnly, 
                 name: "datepicker-day",
                 disabled: !isInRange } } />
+
+            </a>
         </label>
     );
 }
