@@ -12,11 +12,11 @@ self.__precacheManifest = [
     "url": "/yardtp-datetimepicker/static/js/runtime~main.e9bc9597.js"
   },
   {
-    "revision": "38650ff6041d31b5723f",
-    "url": "/yardtp-datetimepicker/static/js/2.38650ff6.chunk.js"
+    "revision": "8208dffec9e689c706dd",
+    "url": "/yardtp-datetimepicker/static/js/2.8208dffe.chunk.js"
   },
   {
-    "revision": "6670ee3367b8e41c54571289e14b52a6",
+    "revision": "df5f0d32366c3a6cd725c9cad677c928",
     "url": "/yardtp-datetimepicker/index.html"
   }
 ];
