@@ -1,5 +1,5 @@
 import React from 'react';
-import { CalendarDay, defStyles } from 'yardtp-datetimepicker';
+import { CalendarDay, defaultStyles } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount, shallow } from 'enzyme';
 import { DateTime, Duration, Interval } from 'luxon';
@@ -58,7 +58,7 @@ describe('<CalendarDay />', () => {
     it('Adds dynamic inRangeDay class to dates within the selectable range', () => {
 
         let inRangeDayClass;
-        const Styled = injectSheet (defStyles) ((props) => {
+        const Styled = injectSheet (defaultStyles) ((props) => {
             inRangeDayClass = props.classes.inRangeDay;
             return <CalendarDay {...props} />;
         });
@@ -80,7 +80,7 @@ describe('<CalendarDay />', () => {
     it('Adds dynamic outOfRangeDay class for days outside the selectable range', () => {
 
         let outOfRangeClass;
-        const Styled = injectSheet (defStyles) ((props) => {
+        const Styled = injectSheet (defaultStyles) ((props) => {
             outOfRangeClass = props.classes.outOfRangeDay;
             return <CalendarDay {...props} />;
         });
@@ -97,7 +97,7 @@ describe('<CalendarDay />', () => {
     it('Adds dynamic previousMonthDay class for days in the month prior to the calValue month', () => {
     
         let prevMonthClass;
-        const Styled = injectSheet (defStyles) ((props) => {
+        const Styled = injectSheet (defaultStyles) ((props) => {
             prevMonthClass = props.classes.previousMonthDay;
             return <CalendarDay {...props} />;
         });
@@ -118,7 +118,7 @@ describe('<CalendarDay />', () => {
     it('Adds dynamic currentMonthDay class for days within calValue month', () => {
 
         let currentMonthClass;
-        const Styled = injectSheet (defStyles) ((props) => {
+        const Styled = injectSheet (defaultStyles) ((props) => {
             currentMonthClass = props.classes.currentMonthDay;
             return <CalendarDay {...props} />;
         });
@@ -139,7 +139,7 @@ describe('<CalendarDay />', () => {
     it('Adds dynamic nextMonthDay class for days in month after calValue month', () => {
 
         let nextMonthClass;
-        const Styled = injectSheet (defStyles) ((props) => {
+        const Styled = injectSheet (defaultStyles) ((props) => {
             nextMonthClass = props.classes.nextMonthDay;
             return <CalendarDay {...props} />;
         });
@@ -161,7 +161,7 @@ describe('<CalendarDay />', () => {
 
         const oneDay = Duration.fromObject({days: 1});
         let presentDayClass;
-        const Styled = injectSheet (defStyles) ((props) => {
+        const Styled = injectSheet (defaultStyles) ((props) => {
             presentDayClass = props.classes.presentDay;
             return <CalendarDay {...props} />;
         });

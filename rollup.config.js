@@ -31,11 +31,9 @@ export default {
       exclude: 'node_modules/**',
       plugins: [ 'external-helpers' ]
     }),
-    resolve(),
-    commonjs({
-      namedExports: {
-        'react': ['useState']
-      }
-    })
+    resolve({
+      extensions: ['.js', '.jsx']
+    }),
+    commonjs()
   ]
 }

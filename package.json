@@ -51,6 +51,8 @@
   ],
   "dependencies": {
     "luxon": "^1.11.2",
-    "react-jss": "^8.6.1"
+    "react-jss": "^8.6.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   }
 }
