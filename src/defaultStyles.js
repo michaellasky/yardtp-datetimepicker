@@ -82,8 +82,7 @@ const defaultStyles = {
             display: "inline-block",
             paddingTop: "25%",
             paddingBottom: "25%",
-            width: "100%",
-            height: "100%"
+            width: "100%"
         }
     },
     monthSelect: {
