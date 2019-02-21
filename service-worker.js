@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/yardtp-datetimepicker/precache-manifest.9aec7a648dc90a7f5fe205aa610e8be6.js"
+  "/yardtp-datetimepicker/precache-manifest.b16e15a80c84108bd4684a1fbdb92404.js"
 );
 
 workbox.clientsClaim();
