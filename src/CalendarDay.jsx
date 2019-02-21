@@ -12,14 +12,13 @@ export default function CalendarDay (props) {
     const classes        = props.classes      || {};
     const validDates     = props.validDates   || minMaxDates;
     
-    const name           = `day-${value.toFormat('X')}`;
     const isSelected     = value.toFormat('D') === selectedValue.toFormat('D');
     const isPrevMonth    = value < calValue.startOf('month');
     const isNextMonth    = value > calValue.endOf('month');
     const isPresent      = value.toFormat('yo') === now.toFormat('yo');
     const isInRange      = validDates.start.startOf('day') < value &&
-                           validDates.end.endOf('day') > value;           
-    
+                           validDates.end.endOf('day') > value;
+                           
     const classNames = 
         `${classes.calendarDay} `                                       + 
         `${isInRange? classes.inRangeDay: classes.outOfRangeDay} `      + 
@@ -33,7 +32,7 @@ export default function CalendarDay (props) {
 
     return (
         <label >
-            <a  href={`#${name}`} 
+            <a  href={`#day-${value.toFormat('X')}`} 
                 onClick={setDay} 
                 className={classNames}>
                
