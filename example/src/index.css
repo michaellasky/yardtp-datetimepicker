@@ -27,7 +27,9 @@ body {
   border-radius: 0.5em;
 }
 
-
+h5 {
+  margin: 0.25em;
+}
 
 .example-container > div {
   border: 1px solid #a1a1a1;

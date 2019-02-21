@@ -1,28 +1,15 @@
-import React, { useState } from 'react';
-import getUnixTime from 'date-fns/getUnixTime';
-import isSameDay from 'date-fns/isSameDay';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import getDate from 'date-fns/getDate';
-import startOfDay from 'date-fns/startOfDay';
-import endOfDay from 'date-fns/endOfDay';
-import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
-
-import { MIN_DATE, MAX_DATE } from './DateTimePicker';
+import React from 'react';
 
 export default function CalendarDay (props) {
-    const now = new Date();
-    const [selectedValue, setSelectedValue] = props.state || useState(now);
-
-    const value       = props.value      || now;
-    const calValue    = props.calValue   || value;
-    const classes     = props.classes    || {};
-    const validDates  = props.validDates || { start: MIN_DATE, end: MAX_DATE };
-    
-    const isSelected  = isSameDay(value, selectedValue);
-    const isPrevMonth = differenceInCalendarMonths(value, calValue) < 0;
-    const isNextMonth = differenceInCalendarMonths(value, calValue) > 0;
-    const isInRange   = isWithinInterval(startOfDay(value), validDates) || 
-                        isWithinInterval(endOfDay(value), validDates);           
+    const setSelectedDay = props.setSelectedDay || (() => {});
+    const dayOfMonth     = props.dayOfMonth     || 42;
+    const timestamp      = props.timestamp      || 0;
+    const classes        = props.classes        || {};
+    const isPrevMonth    = props.isPrevMonth    !== false;
+    const isNextMonth    = props.isNextMonth    !== false;
+    const isInRange      = props.isInRange      === true;
+    const isSameDay      = props.isSameDay      !== false;
+    const isSelected     = props.isSelected     !== false;
 
     const classNames = 
         `${classes.calendarDay} `                                       + 
@@ -30,26 +17,19 @@ export default function CalendarDay (props) {
         `${!isPrevMonth && !isNextMonth? classes.currentMonthDay: ''} ` + 
         `${isPrevMonth? classes.previousMonthDay: ''} `                 + 
         `${isNextMonth? classes.nextMonthDay: ''} `                     + 
-        `${isSameDay(value, new Date())? classes.presentDay: ''}  `     +
+        `${isSameDay? classes.presentDay: ''}  `                        +
         `${isSelected? classes.selectedDay: ''} `                       ;
     
-    function setDay() { if (isInRange) { setSelectedValue(value); } }
+    function setDay() { if (isInRange) { setSelectedDay(timestamp); } }
 
     return (
-        <label >
-            <a  href={`#day-${getUnixTime(value)}`} 
+        <label>
+            <a  href={`#day-${timestamp}`}
+                role="radio" 
                 onClick={setDay} 
                 className={classNames}>
                
-                <span>{getDate(value)}</span>
-                <input {...{  
-                    type: "radio", 
-                    defaultChecked: isSelected, 
-                    value: value,   
-                    tabIndex: 0,
-                    className: classes.srOnly, 
-                    name: "datepicker-day",
-                    disabled: !isInRange } } />
+                <span>{dayOfMonth}</span>
             </a>
         </label>
     );

@@ -11,6 +11,14 @@ import addHours from 'date-fns/addHours';
 import addMinutes from 'date-fns/addMinutes';
 import getHours from 'date-fns/getHours';
 import getMinutes from 'date-fns/getMinutes';
+import isSameDay from 'date-fns/isSameDay';
+import isWithinInterval from 'date-fns/isWithinInterval';
+import fromUnixTime from 'date-fns/fromUnixTime';
+import getUnixTime from 'date-fns/getUnixTime';
+import startOfDay from 'date-fns/startOfDay';
+import endOfDay from 'date-fns/endOfDay';
+import getDate from 'date-fns/getDate';
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
 
 import { 
     MonthYearPicker, 
@@ -27,23 +35,39 @@ export default function DatePicker (props) {
     const earliestDate  = props.earliestDate || MIN_DATE;
     const latestDate    = props.latestDate   || MAX_DATE;
     const style         = {...defaultStyles, ...props.style};
-    const validDates    = { start: earliestDate, end: latestDate };
-    const monthStart    = startOfMonth(calValue);
-    const firstCalDay   = subDays(monthStart, getDay(monthStart)); 
+    const range         = { start: earliestDate, end: latestDate };
+    const monStart      = startOfMonth(calValue);
+    const firstCalDay   = subDays(monStart, getDay(monStart)); 
+    const today         = new Date();
 
     const StyledDay = injectSheet (style) ((p) => <CalendarDay {...p} />);
+
+    const setSelectedDay = (ts) => {
+        setValue(fromUnixTime(ts));
+        setCalValue(fromUnixTime(ts));
+    }
 
     // Each calendar week
     const weeks = [...Array(6).keys()].map((weekNum) => {
         
         // Each day in that week
         return [...Array(7).keys()].map((dayNum) => {
-            const day = addDays(firstCalDay, weekNum * 7 + dayNum); 
+            const numDays = weekNum * 7 + dayNum;
+            const [valHours, valMin] = [getHours(value), getMinutes(value)];
+            const midnight = addDays(firstCalDay, numDays);
+            const day = addHours(addMinutes(midnight, valMin), valHours);
             
             return <StyledDay {...{
-                state: [value, (v) => { setCalValue(v); setValue(v);}],
-                value: addHours(addMinutes(day, getMinutes(value)), getHours(value)), 
-                key: dayNum, calValue, validDates
+                setSelectedDay, 
+                timestamp:   getUnixTime(day),
+                dayOfMonth:  getDate(day),
+                isSelected:  isSameDay(day, value),
+                isSameDay:   isSameDay(day, today),
+                isPrevMonth: differenceInCalendarMonths(day, calValue) <0,
+                isNextMonth: differenceInCalendarMonths(day, calValue) >0,
+                isInRange:   isWithinInterval(startOfDay(day), range) || 
+                             isWithinInterval(endOfDay(day), range),
+                key: dayNum
             } } />;
         });
     });
@@ -67,8 +91,8 @@ export default function DatePicker (props) {
         </div>
     );
 
-    if      (isBefore(value, validDates.start)) { setValue(validDates.start); }
-    else if (isAfter(value, validDates.end))    { setValue(validDates.end);   }
+    if      (isBefore(value, range.start)) { setValue(range.start); }
+    else if (isAfter(value, range.end))    { setValue(range.end);   }
 
     return <StyledDatePicker {...props} />;
 }

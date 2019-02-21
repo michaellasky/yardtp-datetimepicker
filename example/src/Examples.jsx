@@ -18,6 +18,7 @@ export default function Examples (props) {
   return (
       <div className="examples">
         <h1>yardtp-datetimepicker Examples</h1>
+        <h5>v2.0.1</h5>
         <a href="https://github.com/NuclearHorseStudios/yardtp-datetimepicker">github</a> | <a href="https://www.npmjs.com/package/yardtp-datetimepicker">npm</a> 
         <nav>
           <ul>

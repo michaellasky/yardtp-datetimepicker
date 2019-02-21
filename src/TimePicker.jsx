@@ -35,7 +35,7 @@ export default function TimePicker (props) {
         
         return (
             <DateJogger {...dateJoggerProps}>
-              <div className={classes.timeDisplay}>{format(value, fmt)}</div>
+                <div className={classes.timeDisplay}>{format(value, fmt)}</div>
             </DateJogger>
         );
     });

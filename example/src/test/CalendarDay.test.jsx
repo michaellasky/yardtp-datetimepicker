@@ -36,25 +36,26 @@ describe('<CalendarDay />', () => {
 
     it('Sets the displayed day equal to props.value', () => {
 
-        mountComponent({ value: now, selectedValue: yesterday});
+        mountComponent({ dayOfMonth: 42 });
 
-        expect(wrapper.find('label').text()).toBe(getDate(now).toString());
+        expect(wrapper.find('label').text()).toBe("42");
     });
 
     it('Calls props.setSelectedValue with props.value when clicked', () => {
 
-        const setSelVal = jest.fn();
+        const setSelDay = jest.fn();
         mountComponent({
-            value: now, 
-            state: [yesterday, setSelVal]
+            setSelectedDay: setSelDay,
+            isInRange: true, 
+            timestamp: 12345
         });
 
-        expect(setSelVal.mock.calls.length).toBe(0);
+        expect(setSelDay.mock.calls.length).toBe(0);
 
         wrapper.find('a').simulate('click');
         
-        expect(setSelVal.mock.calls.length).toBe(1);
-        expect(setSelVal.mock.calls[0][0]).toEqual(now);
+        expect(setSelDay.mock.calls.length).toBe(1);
+        expect(setSelDay.mock.calls[0][0]).toEqual(12345);
     });
 
     it('Adds dynamic inRangeDay class to dates within the selectable range', () => {
@@ -65,18 +66,11 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {value: now, validDates: { start: yesterday, end: tomorrow } };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isInRange={true} />);
         expect(wrapper.find(`a.${inRangeDayClass}`).exists()).toBe(true);
-
-        props = {value: tomorrow, validDates: { start: yesterday, end: now } };
-        wrapper = mount(<Styled {...props} />);
+        
+        wrapper = mount(<Styled isInRange={false} />);
         expect(wrapper.find(`a.${inRangeDayClass}`).exists()).toBe(false);
-
-        props = {value: now, validDates: { start: yesterday, end: yesterday } };
-        wrapper = mount(<Styled {...props} />);
-        expect(wrapper.find(`a.${inRangeDayClass}`).exists()).toBe(false);
-
     });
 
     it('Adds dynamic outOfRangeDay class for days outside the selectable range', () => {
@@ -87,12 +81,10 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {value: tomorrow, validDates: { start: yesterday, end: now } };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isInRange={false} />);
         expect(wrapper.find(`a.${outOfRangeClass}`).exists()).toBe(true);
 
-        props = {value: now, validDates: { start: yesterday, end: tomorrow } };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isInRange={true} />);
         expect(wrapper.find(`a.${outOfRangeClass}`).exists()).toBe(false);
     });
 
@@ -104,16 +96,10 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {calValue: now, value: lastMonth};
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isPrevMonth={true} />);
         expect(wrapper.find(`a.${prevMonthClass}`).exists()).toBe(true);
 
-        props = {calValue: now, value: now};
-        wrapper = mount(<Styled {...props} />);
-        expect(wrapper.find(`a.${prevMonthClass}`).exists()).toBe(false);
-
-        props = {calValue: now, value: nextMonth};
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isPrevMonth={false} />);
         expect(wrapper.find(`a.${prevMonthClass}`).exists()).toBe(false);
     });
 
@@ -125,16 +111,13 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {calValue: now, value: lastMonth };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isPrevMonth={false} isNextMonth={true} />);
         expect(wrapper.find(`a.${currentMonthClass}`).exists()).toBe(false);
 
-        props = {calValue: now, value: now };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isPrevMonth={false} isNextMonth={false} />);
         expect(wrapper.find(`a.${currentMonthClass}`).exists()).toBe(true);
-
-        props = {calValue: now, value: nextMonth };
-        wrapper = mount(<Styled {...props} />);
+;
+        wrapper = mount(<Styled isPrevMonth={true} isNextMonth={false} />);
         expect(wrapper.find(`a.${currentMonthClass}`).exists()).toBe(false);
     });
 
@@ -146,16 +129,10 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {calValue: now, value: lastMonth };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isNextMonth={false} />);
         expect(wrapper.find(`a.${nextMonthClass}`).exists()).toBe(false);
 
-        props = {calValue: now, value: now };
-        wrapper = mount(<Styled {...props} />);
-        expect(wrapper.find(`a.${nextMonthClass}`).exists()).toBe(false);
-
-        props = {calValue: now, value: nextMonth };
-        wrapper = mount(<Styled {...props} />);
+        wrapper = mount(<Styled isNextMonth={true} />);
         expect(wrapper.find(`a.${nextMonthClass}`).exists()).toBe(true);
     });
 
@@ -168,13 +145,10 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });``
 
-        wrapper = mount(<Styled value={today} />);
+        wrapper = mount(<Styled isSameDay={true} />);
         expect(wrapper.find(`a.${presentDayClass}`).exists()).toBe(true);
 
-        wrapper = mount(<Styled value={addDays(today, 1)} />);
-        expect(wrapper.find(`a.${presentDayClass}`).exists()).toBe(false);
-
-        wrapper = mount(<Styled value={subDays(today, 1)} />);
+        wrapper = mount(<Styled isSameDay={false} />);
         expect(wrapper.find(`a.${presentDayClass}`).exists()).toBe(false);
     });
 });
