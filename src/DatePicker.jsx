@@ -1,7 +1,12 @@
 import React from 'react';
 import injectSheet from 'react-jss';
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
+import isWithinInterval from 'date-fns/isWithinInterval';
 import startOfMonth from 'date-fns/startOfMonth';
+import getUnixTime from 'date-fns/getUnixTime';
+import fromUnixTime from 'date-fns/fromUnixTime';
 import getDay from 'date-fns/getDay';
+import getDate from 'date-fns/getDate';
 import subDays from 'date-fns/subDays';
 import addDays from 'date-fns/addDays';
 import format from 'date-fns/format';
@@ -12,13 +17,8 @@ import addMinutes from 'date-fns/addMinutes';
 import getHours from 'date-fns/getHours';
 import getMinutes from 'date-fns/getMinutes';
 import isSameDay from 'date-fns/isSameDay';
-import isWithinInterval from 'date-fns/isWithinInterval';
-import fromUnixTime from 'date-fns/fromUnixTime';
-import getUnixTime from 'date-fns/getUnixTime';
-import startOfDay from 'date-fns/startOfDay';
 import endOfDay from 'date-fns/endOfDay';
-import getDate from 'date-fns/getDate';
-import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
+import startOfDay from 'date-fns/startOfDay';
 
 import { 
     MonthYearPicker, 
