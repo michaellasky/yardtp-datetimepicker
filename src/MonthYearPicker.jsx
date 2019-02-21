@@ -1,11 +1,12 @@
 import React from 'react';
 import injectSheet from 'react-jss';
 import { DateJogger, useDatePickerState } from './DateTimePicker';
+import format from 'date-fns/format';
 
 export default function MonthYearPicker (props) {
     const [ , , value, setValue] = props.state || useDatePickerState();
-    const month         = value.toFormat(props.monthFormat || 'MMMM');
-    const year          = value.toFormat(props.yearFormat || 'yyyy');
+    const month         = format(value, props.monthFormat || 'LLLL');
+    const year          = format(value, props.yearFormat || 'yyyy');
     const increaseLabel = props.increaseLabel || "Next Month";
     const decreaseLabel = props.decreaseLabel || "Previous Month";
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import DateTimePicker, { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
+import format from 'date-fns/format';
 
 // EXAMPLE 3: Using DatePicker and TimePicker together
 
@@ -12,7 +13,7 @@ export default function Example3 (props) {
   
     return (
         <>
-        {selectedValue.toFormat('fff')}
+        {format(selectedValue, 'fff')}
         <DatePicker state={state} />
         <TimePicker state={state} />
         

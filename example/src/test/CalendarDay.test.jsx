@@ -2,18 +2,20 @@ import React from 'react';
 import { CalendarDay, defaultStyles } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount, shallow } from 'enzyme';
-import { DateTime, Duration, Interval } from 'luxon';
 import injectSheet from 'react-jss';
+import addDays from 'date-fns/addDays';
+import subDays from 'date-fns/subDays';
+import getDate from 'date-fns/getDate';
 
 let wrapper;
         
 Enzyme.configure({ adapter: new Adapter() });
 
-const now = DateTime.local(1985, 10, 26, 1, 21);
-const yesterday = now.minus(Duration.fromObject({'days': 1}));
-const tomorrow = now.plus(Duration.fromObject({'days': 1}));
-const lastMonth = now.minus(Duration.fromObject({'months': 1}));
-const nextMonth = now.plus(Duration.fromObject({'months': 1}));
+const now = new Date(1985, 9, 26, 1, 21);
+const yesterday = new Date(1985, 9, 25, 1, 21);
+const tomorrow = new Date(1985, 9, 27, 1, 21);
+const lastMonth = new Date(1985, 8, 25, 1, 21);
+const nextMonth = new Date(1985, 10, 25, 1, 21);
 
 describe('<CalendarDay />', () => {
 
@@ -36,7 +38,7 @@ describe('<CalendarDay />', () => {
 
         mountComponent({ value: now, selectedValue: yesterday});
 
-        expect(wrapper.find('label').text()).toBe(now.day.toString());
+        expect(wrapper.find('label').text()).toBe(getDate(now).toString());
     });
 
     it('Calls props.setSelectedValue with props.value when clicked', () => {
@@ -44,7 +46,7 @@ describe('<CalendarDay />', () => {
         const setSelVal = jest.fn();
         mountComponent({
             value: now, 
-            state: [yesterday,setSelVal]
+            state: [yesterday, setSelVal]
         });
 
         expect(setSelVal.mock.calls.length).toBe(0);
@@ -63,15 +65,15 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {value: now, validDates: Interval.fromDateTimes(yesterday, tomorrow) };
+        let props = {value: now, validDates: { start: yesterday, end: tomorrow } };
         wrapper = mount(<Styled {...props} />);
         expect(wrapper.find(`a.${inRangeDayClass}`).exists()).toBe(true);
 
-        props = {value: tomorrow, validDates: Interval.fromDateTimes(yesterday, now) };
+        props = {value: tomorrow, validDates: { start: yesterday, end: now } };
         wrapper = mount(<Styled {...props} />);
         expect(wrapper.find(`a.${inRangeDayClass}`).exists()).toBe(false);
 
-        props = {value: now, validDates: Interval.fromDateTimes(yesterday, yesterday) };
+        props = {value: now, validDates: { start: yesterday, end: yesterday } };
         wrapper = mount(<Styled {...props} />);
         expect(wrapper.find(`a.${inRangeDayClass}`).exists()).toBe(false);
 
@@ -85,11 +87,11 @@ describe('<CalendarDay />', () => {
             return <CalendarDay {...props} />;
         });
 
-        let props = {value: tomorrow, validDates: Interval.fromDateTimes(yesterday, now) };
+        let props = {value: tomorrow, validDates: { start: yesterday, end: now } };
         wrapper = mount(<Styled {...props} />);
         expect(wrapper.find(`a.${outOfRangeClass}`).exists()).toBe(true);
 
-        props = {value: now, validDates: Interval.fromDateTimes(yesterday, tomorrow) };
+        props = {value: now, validDates: { start: yesterday, end: tomorrow } };
         wrapper = mount(<Styled {...props} />);
         expect(wrapper.find(`a.${outOfRangeClass}`).exists()).toBe(false);
     });
@@ -159,20 +161,20 @@ describe('<CalendarDay />', () => {
 
     it('Adds dynamic presentDay class to the current day', () => {
 
-        const oneDay = Duration.fromObject({days: 1});
+        const today = new Date();
         let presentDayClass;
         const Styled = injectSheet (defaultStyles) ((props) => {
             presentDayClass = props.classes.presentDay;
             return <CalendarDay {...props} />;
-        });
+        });``
 
-        wrapper = mount(<Styled value={DateTime.local()} />);
+        wrapper = mount(<Styled value={today} />);
         expect(wrapper.find(`a.${presentDayClass}`).exists()).toBe(true);
 
-        wrapper = mount(<Styled value={DateTime.local().plus(oneDay)} />);
+        wrapper = mount(<Styled value={addDays(today, 1)} />);
         expect(wrapper.find(`a.${presentDayClass}`).exists()).toBe(false);
 
-        wrapper = mount(<Styled value={DateTime.local().minus(oneDay)} />);
+        wrapper = mount(<Styled value={subDays(today, 1)} />);
         expect(wrapper.find(`a.${presentDayClass}`).exists()).toBe(false);
     });
 });

@@ -34,6 +34,10 @@ export default {
     resolve({
       extensions: ['.js', '.jsx']
     }),
-    commonjs()
+    commonjs({
+      namedExports: {
+        'react': ['useState']
+      }
+    })
   ]
 }

@@ -1,42 +1,47 @@
 import React, { useState } from 'react';
-import { DateTime, Interval } from 'luxon';
+import getUnixTime from 'date-fns/getUnixTime';
+import isSameDay from 'date-fns/isSameDay';
+import isWithinInterval from 'date-fns/isWithinInterval';
+import getDate from 'date-fns/getDate';
+import startOfDay from 'date-fns/startOfDay';
+import endOfDay from 'date-fns/endOfDay';
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths';
+
 import { MIN_DATE, MAX_DATE } from './DateTimePicker';
 
 export default function CalendarDay (props) {
-    const now = DateTime.local();
+    const now = new Date();
     const [selectedValue, setSelectedValue] = props.state || useState(now);
 
-    const minMaxDates    = Interval.fromDateTimes(MIN_DATE, MAX_DATE);
-    const value          = props.value        || now;
-    const calValue       = props.calValue     || value;
-    const classes        = props.classes      || {};
-    const validDates     = props.validDates   || minMaxDates;
+    const value       = props.value      || now;
+    const calValue    = props.calValue   || value;
+    const classes     = props.classes    || {};
+    const validDates  = props.validDates || { start: MIN_DATE, end: MAX_DATE };
     
-    const isSelected     = value.toFormat('D') === selectedValue.toFormat('D');
-    const isPrevMonth    = value < calValue.startOf('month');
-    const isNextMonth    = value > calValue.endOf('month');
-    const isPresent      = value.toFormat('yo') === now.toFormat('yo');
-    const isInRange      = validDates.start.startOf('day') < value &&
-                           validDates.end.endOf('day') > value;
-                           
+    const isSelected  = isSameDay(value, selectedValue);
+    const isPrevMonth = differenceInCalendarMonths(value, calValue) < 0;
+    const isNextMonth = differenceInCalendarMonths(value, calValue) > 0;
+    const isInRange   = isWithinInterval(startOfDay(value), validDates) || 
+                        isWithinInterval(endOfDay(value), validDates);           
+
     const classNames = 
         `${classes.calendarDay} `                                       + 
         `${isInRange? classes.inRangeDay: classes.outOfRangeDay} `      + 
         `${!isPrevMonth && !isNextMonth? classes.currentMonthDay: ''} ` + 
         `${isPrevMonth? classes.previousMonthDay: ''} `                 + 
         `${isNextMonth? classes.nextMonthDay: ''} `                     + 
-        `${isPresent? classes.presentDay: ''}  `                        +
+        `${isSameDay(value, new Date())? classes.presentDay: ''}  `     +
         `${isSelected? classes.selectedDay: ''} `                       ;
     
     function setDay() { if (isInRange) { setSelectedValue(value); } }
 
     return (
         <label >
-            <a  href={`#day-${value.toFormat('X')}`} 
+            <a  href={`#day-${getUnixTime(value)}`} 
                 onClick={setDay} 
                 className={classNames}>
                
-                <span>{value.day}</span>
+                <span>{getDate(value)}</span>
                 <input {...{  
                     type: "radio", 
                     defaultChecked: isSelected, 

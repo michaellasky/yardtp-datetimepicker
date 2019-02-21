@@ -50,7 +50,9 @@
     "dist"
   ],
   "dependencies": {
-    "luxon": "^1.11.2",
-    "react-jss": "^8.6.1"
+    "date-fns": "^2.0.0-alpha.27",
+    "react-jss": "^8.6.1",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1"
   }
 }

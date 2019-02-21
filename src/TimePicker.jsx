@@ -1,6 +1,9 @@
 import React from 'react';
-import { DateTime } from 'luxon';
 import injectSheet from 'react-jss';
+import format from 'date-fns/format';
+import setDate from 'date-fns/setDate';
+import getDate from 'date-fns/getDate';
+
 import { 
     DateJogger, 
     useDatePickerState, 
@@ -11,15 +14,13 @@ export default function TimePicker (props) {
     const style             = { ...defaultStyles, ...props.style };
     const [value, setValue] = props.state         || useDatePickerState();
     const restrictTime      = props.restrictTimeToDay !== false;
-    const fmt               = props.format        || 't';
+    const fmt               = props.format        || 'p';
     const increaseLabel     = props.increaseLabel || "Increase Time";
     const decreaseLabel     = props.decreaseLabel || "Decrease Time";
 
-    function restrict (t, v = value) {
-        return DateTime.local(v.year, v.month, v.day, t.hour, t.minute);
-    } 
-
-    const setVal = (v) => restrictTime? setValue(restrict(v)): setValue(v);
+    function setVal (v) { 
+        return restrictTime? setValue(setDate(v, getDate(value))): setValue(v);
+    }
     
     const StyledTimePicker = injectSheet (style) ((props) => {
         const classes = {
@@ -28,14 +29,13 @@ export default function TimePicker (props) {
             container: props.classes.timePicker 
         };
         const dateJoggerProps = {
-            ...props, 
+            ...props, classes, increaseLabel, decreaseLabel,
             state: [value, setVal], 
-            classes, increaseLabel, decreaseLabel
         };
         
         return (
             <DateJogger {...dateJoggerProps}>
-              <div className={classes.timeDisplay}>{value.toFormat(fmt)}</div>
+              <div className={classes.timeDisplay}>{format(value, fmt)}</div>
             </DateJogger>
         );
     });

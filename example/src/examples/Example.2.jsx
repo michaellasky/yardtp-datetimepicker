@@ -1,5 +1,6 @@
 import React from 'react';
 import { TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
+import format from 'date-fns/format';
 
 // EXAMPLE 2: TimePicker basic usage
 
@@ -12,7 +13,7 @@ export default function Example2 (props) {
   
     return (
         <>
-        {selectedValue.toFormat('t')}
+        {format(selectedValue, 't')}
         <TimePicker state={state} />
         </>
     );

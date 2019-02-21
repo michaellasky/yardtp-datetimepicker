@@ -1,18 +1,25 @@
 import React from 'react';
-import { Duration } from 'luxon';
 import { useDatePickerState } from './DateTimePicker';
+import addMinutes from 'date-fns/addMinutes';
+import addMonths from 'date-fns/addMonths';
+import getMonth from 'date-fns/getMonth'
+import getMinutes from 'date-fns/getMinutes';
 
 export default function DateJogger (props) {
     const [value, setValue] = props.state         || useDatePickerState();
     const classes           = props.classes       || {};
     const interval          = props.intervalStep  || 15;
-    const timeUnit          = props.timeUnit      || 'minute';
+    const unit              = props.timeUnit      || 'minute';
 
     function jog(reverse = false) {
         const num = reverse? -interval: interval;
-        const delta = num - ((~~(value[timeUnit]) % interval));
-
-        setValue(value.plus(Duration.fromObject({[`${timeUnit}s`]: delta})));
+        
+        if (unit.match(/^minute[s]*/)) { 
+            setValue(addMinutes(value, num - (getMinutes(value) % interval))); 
+        } 
+        else if (unit.match(/^month[s]*/))  { 
+            setValue(addMonths(value, num - ((getMonth(value)+1) % interval)));  
+        }
     }
 
     return (

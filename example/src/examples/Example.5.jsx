@@ -1,6 +1,7 @@
 import React from 'react';
 import { DatePicker, TimePicker, useDatePickerState } from 'yardtp-datetimepicker';
-import { Duration } from 'luxon';
+import format from 'date-fns/format';
+import addDays from 'date-fns/addDays';
 
 // EXAMPLE 5: Setting the Selected Value dynamically
 
@@ -10,15 +11,14 @@ export default function Example5 (props) {
     const [selectedValue, setSelectedValue] = state;
   
     function selectNextDay (e) {
-        const oneDay = Duration.fromObject({days: 1});
-        setSelectedValue(selectedValue.plus(oneDay));
+        setSelectedValue(addDays(selectedValue, 1));
     }
 
     return (
         <>
         <button onClick={selectNextDay}>Select next day</button>
         &nbsp;&nbsp;
-        {selectedValue.toFormat('fff')}
+        {format(selectedValue, 'fff')}
         <DatePicker state={state} />
         <TimePicker state={state} />
         </>

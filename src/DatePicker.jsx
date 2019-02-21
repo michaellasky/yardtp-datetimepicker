@@ -1,7 +1,17 @@
-
 import React from 'react';
-import { DateTime, Duration, Interval } from 'luxon';
 import injectSheet from 'react-jss';
+import startOfMonth from 'date-fns/startOfMonth';
+import getDay from 'date-fns/getDay';
+import subDays from 'date-fns/subDays';
+import addDays from 'date-fns/addDays';
+import format from 'date-fns/format';
+import isBefore from 'date-fns/isBefore';
+import isAfter from 'date-fns/isAfter';
+import addHours from 'date-fns/addHours';
+import addMinutes from 'date-fns/addMinutes';
+import getHours from 'date-fns/getHours';
+import getMinutes from 'date-fns/getMinutes';
+
 import { 
     MonthYearPicker, 
     CalendarDay, 
@@ -17,10 +27,9 @@ export default function DatePicker (props) {
     const earliestDate  = props.earliestDate || MIN_DATE;
     const latestDate    = props.latestDate   || MAX_DATE;
     const style         = {...defaultStyles, ...props.style};
-    const validDates    = Interval.fromDateTimes(earliestDate, latestDate);
-    const monthStart    = calValue.startOf('month');
-    const weekdayOf1st  = Duration.fromObject({days: monthStart.weekday});
-    const firstCalDay   = monthStart.minus(weekdayOf1st); 
+    const validDates    = { start: earliestDate, end: latestDate };
+    const monthStart    = startOfMonth(calValue);
+    const firstCalDay   = subDays(monthStart, getDay(monthStart)); 
 
     const StyledDay = injectSheet (style) ((p) => <CalendarDay {...p} />);
 
@@ -29,18 +38,12 @@ export default function DatePicker (props) {
         
         // Each day in that week
         return [...Array(7).keys()].map((dayNum) => {
-            const dayNumber = weekNum * 7 + dayNum;
-            const timeFromDayZero = Duration.fromObject({
-                days: dayNumber,
-                hours: value.hour, 
-                minutes: value.minute
-            });            
-
+            const day = addDays(firstCalDay, weekNum * 7 + dayNum); 
+            
             return <StyledDay {...{
-                key: dayNumber, 
                 state: [value, (v) => { setCalValue(v); setValue(v);}],
-                value: firstCalDay.plus(timeFromDayZero), 
-                calValue, validDates, dayNum, weekNum
+                value: addHours(addMinutes(day, getMinutes(value)), getHours(value)), 
+                key: dayNum, calValue, validDates
             } } />;
         });
     });
@@ -51,8 +54,7 @@ export default function DatePicker (props) {
 
     // ["Mon", "Tues", "Wed",...] starting from locale's first day of week
     const dayNames = [...Array(7).keys()].map((weekDayNumber) => {
-        const weekStartDelta = Duration.fromObject({days: weekDayNumber});
-        const dayName = firstCalDay.plus(weekStartDelta).toFormat('EEE');
+        const dayName = format(addDays(firstCalDay, weekDayNumber), 'EEE');
         
         return <StyledDayName key={dayName}>{dayName}</StyledDayName>;
     });
@@ -65,8 +67,8 @@ export default function DatePicker (props) {
         </div>
     );
 
-    if      (validDates.start > value) { setValue(validDates.start); }
-    else if (validDates.end   < value) { setValue(validDates.end);   }
+    if      (isBefore(value, validDates.start)) { setValue(validDates.start); }
+    else if (isAfter(value, validDates.end))    { setValue(validDates.end);   }
 
     return <StyledDatePicker {...props} />;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import { DatePicker, MAX_DATE, useDatePickerState } from 'yardtp-datetimepicker';
-import { DateTime } from 'luxon';
+import { DatePicker, MAX_DATE, useDatePickerState } from 'yardtp-datetimepicker/';
+import format from 'date-fns/format';
+
 // EXAMPLE 1: DatePicker basic usage
 
 export default function Example1 (props) {
@@ -11,7 +12,7 @@ export default function Example1 (props) {
 
     return (
         <>
-        {selectedValue.toFormat('DD')} - {calendarValue.toFormat('DD')}
+        {format(selectedValue, 'MMMM d, y')} - {format(calendarValue, 'MMMM d, y')}
         <DatePicker state={state} />
         </>
     );

@@ -13,7 +13,7 @@
 npm install --save yardtp-datetimepicker
 ```
 ## Dependencies
-* [![Version](http://img.shields.io/npm/v/luxon.svg?style=flat)](https://npmjs.org/package/luxon) luxon
+* [![Version](http://img.shields.io/npm/v/date-fns.svg?style=flat)](https://www.npmjs.com/package/date-fns) date-fns
 * [![Version](http://img.shields.io/npm/v/react-jss.svg?style=flat)](https://www.npmjs.com/package/react-jss) react-jss
 
 ## Peer Dependencies
@@ -23,20 +23,26 @@ npm install --save yardtp-datetimepicker
 [Go to Live Examples](https://nuclearhorsestudios.github.io/yardtp-datetimepicker/)
 
 ```jsx
-import React from 'react'
-import DateTimePicker, { useDatePickerState } from 'yardtp-datetimepicker'
+import React from 'react';
+import { DatePicker, useDatePickerState } from 'yardtp-datetimepicker/';
+import format from 'date-fns/format';
 
-export default YarDTPExample  {
+// EXAMPLE 1: DatePicker basic usage
 
-  const state = useDatePickerState(); 
-  const [value, setValue, calValue, setCalValue] = state;
+export default function Example1 (props) {
 
-  return (
-    <>
-      Currently selected date and time: {value.toFormat('ffff')}
-      <DateTimePicker state={state}/>
-    </>
-  );
+    // useDatePickerState will default to today
+    const state = useDatePickerState(); 
+    // The output of useDatePickerState is an array with values and setFunctions for 
+    // the currently selected day and the date for the calendar to display
+    const [selectedValue, setSelectedValue, calendarValue, setCalendarValue] = state;
+
+    return (
+        <>
+        {format(selectedValue, 'MMMM d, y')} - {format(calendarValue, 'MMMM d, y')}
+        <DatePicker state={state} />
+        </>
+    );
 }
 ```
 
@@ -52,17 +58,17 @@ The props listed below can be passed to DateTimePicker and will be passed throug
 ### DatePicker
 | Name              | Default    |  |
 | ----------------- |:----------:| -
-| earliestDate      | 01/01/0001 | The earliest selectable datetime. Expects a luxon DateTime object. 
-| latestDate        | 12/31/9999 | The latest selectable datetime. Expects a luxon DateTime object.
-| monthFormat      | "MMMM"      | Format that gets passed to luxon's toFormat method when displaying the month.  See: [Luxon Table of Tokens](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens)
-| yearFormat       | "yyyy"      | Format that gets passed to luxon's toFormat method when displaying the year.  See: [Luxon Table of Tokens](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens)
+| earliestDate      | 01/01/0001 | The earliest selectable datetime. Expects a vanilla Javascript Date object.
+| latestDate        | 12/31/9999 | The latest selectable datetime. Expects a vanilla Javascript Date object.
+| monthFormat      | "MMMM"      | Format that gets passed to date-fns format function when displaying the month.  See: [Unicode Date Field Symbol Table](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
+| yearFormat       | "yyyy"      | Format that gets passed to date-fns format function when displaying the year.  See: [Unicode Date Field Symbol Table](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
 
 ### TimePicker
 | Name              | Default |  |
 | ----------------- |:-------:| -
 | restrictTimeToDay | true    | If true, the Selected Calendar Day won't advance to  next day when the time selected increases past 12:00am, nor retreat to the previous day when selected time decreases before 12:00am. 
 | intervalStep      | 15      | Number of minutes to advance or retreat the selected time. 
-| format    	    | "t"     | Format that gets passed to luxon's toFormat method when displaying the time.  See: [Luxon Table of Tokens](https://moment.github.io/luxon/docs/manual/formatting.html#table-of-tokens)
+| format    	    | "p"     | Format that gets passed to date-fns format function when displaying the time.  See: [Unicode Date Field Symbol Table](https://www.unicode.org/reports/tr35/tr35-dates.html#Date_Field_Symbol_Table)
 
 ## Styling
 See: [https://nuclearhorsestudios.github.io/yardtp-datetimepicker/#styling](https://nuclearhorsestudios.github.io/yardtp-datetimepicker/#styling)

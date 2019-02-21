@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { DateTime } from 'luxon';
 import defaultStyles from './defaultStyles';
 import CalendarDay from './CalendarDay';
 import DateJogger from './DateJogger';
@@ -16,8 +15,8 @@ export default function DateTimePicker (props) {
     );
 }
 
-export const MAX_DATE = DateTime.fromMillis(253402300799999);
-export const MIN_DATE = DateTime.fromMillis(0);
+export const MAX_DATE = new Date(9999, 11, 32, 23, 59, 59, 999);
+export const MIN_DATE = new Date(1, 0, 1);
 
 export { 
     CalendarDay, 
@@ -30,6 +29,6 @@ export {
 
 
 export function useDatePickerState (value, calVal) {
-    const now = DateTime.local();
+    const now = new Date();
     return [...useState(value || now),...useState(calVal || value || now)];
 }
