@@ -6,6 +6,7 @@
 > yardtp-datetimepicker is a blazingly unbenchmarked Datetime Picker component for React 16.8+ focusing on simplicity and accessiblity. 
 
 [![NPM](https://img.shields.io/npm/v/yardtp-datetimepicker.svg)](https://www.npmjs.com/package/yardtp-datetimepicker) 
+[![SIZE](https://img.shields.io/bundlephobia/min/yardtp-datetimepicker.svg)](https://www.npmjs.com/package/yardtp-datetimepicker)
 
 ## Install
 
