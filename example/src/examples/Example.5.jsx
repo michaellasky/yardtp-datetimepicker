@@ -18,7 +18,7 @@ export default function Example5 (props) {
         <>
         <button onClick={selectNextDay}>Select next day</button>
         &nbsp;&nbsp;
-        {format(selectedValue, 'fff')}
+        {format(selectedValue, 'MMMM d, y p')}
         <DatePicker state={state} />
         <TimePicker state={state} />
         </>

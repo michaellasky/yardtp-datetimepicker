@@ -1,5 +1,5 @@
 import React from 'react';
-import { DatePicker, MAX_DATE, useDatePickerState } from 'yardtp-datetimepicker/';
+import { DatePicker, useDatePickerState } from 'yardtp-datetimepicker/';
 import format from 'date-fns/format';
 
 // EXAMPLE 1: DatePicker basic usage

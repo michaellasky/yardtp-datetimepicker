@@ -21,7 +21,7 @@ export default function Example4 (p) {
   
     return (
         <>
-        {format(selectedValue, 'fff')}
+        {format(selectedValue, 'MMMM d, y p')}
         <DatePicker {...props} />
         <TimePicker {...props} />
         </>

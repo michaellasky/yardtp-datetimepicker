@@ -12,7 +12,7 @@ export default function Example6 (props) {
   
     return (
         <>
-        {format(selectedValue, 'fff')}
+        {format(selectedValue, 'MMMM d, y p')}
         <DatePicker state={state} />
         <TimePicker state={state} restrictTimeToDay={false}/>
         </>

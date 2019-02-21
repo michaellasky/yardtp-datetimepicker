@@ -13,7 +13,7 @@ export default function Example2 (props) {
   
     return (
         <>
-        {format(selectedValue, 't')}
+        {format(selectedValue, 'p')}
         <TimePicker state={state} />
         </>
     );
