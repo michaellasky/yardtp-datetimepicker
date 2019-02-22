@@ -7,7 +7,7 @@ export default function CalendarDay (props) {
     const classes        = props.classes        || {};
     const isPrevMonth    = props.isPrevMonth    !== false;
     const isNextMonth    = props.isNextMonth    !== false;
-    const isInRange      = props.isInRange      === true;
+    const isInRange      = props.isInRange      === undefined;
     const isSameDay      = props.isSameDay      !== false;
     const isSelected     = props.isSelected     !== false;
 
