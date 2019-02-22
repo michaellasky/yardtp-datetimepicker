@@ -11,7 +11,7 @@ export default function CalendarDay (props) {
     const isSameDay      = props.isSameDay      !== false;
     const isSelected     = props.isSelected     !== false;
 
-    const classNames = 
+    const className = 
         `${classes.calendarDay} `                                       + 
         `${isInRange? classes.inRangeDay: classes.outOfRangeDay} `      + 
         `${!isPrevMonth && !isNextMonth? classes.currentMonthDay: ''} ` + 
@@ -20,15 +20,11 @@ export default function CalendarDay (props) {
         `${isSameDay? classes.presentDay: ''}  `                        +
         `${isSelected? classes.selectedDay: ''} `                       ;
     
-    function setDay() { if (isInRange) { setSelectedDay(timestamp); } }
+    function onClick() { if (isInRange) { setSelectedDay(timestamp); } }
 
     return (
         <label>
-            <a  href={`#day-${timestamp}`}
-                role="radio" 
-                onClick={setDay} 
-                className={classNames}>
-               
+            <a  {...{ href: `#day-${timestamp}`, onClick, className } } >
                 <span>{dayOfMonth}</span>
             </a>
         </label>
