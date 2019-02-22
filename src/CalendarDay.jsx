@@ -5,6 +5,7 @@ export default function CalendarDay (props) {
     const dayOfMonth     = props.dayOfMonth     || 42;
     const timestamp      = props.timestamp      || 0;
     const classes        = props.classes        || {};
+
     const isPrevMonth    = props.isPrevMonth;
     const isNextMonth    = props.isNextMonth;
     const isInRange      = props.isInRange;
