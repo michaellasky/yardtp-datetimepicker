@@ -5,11 +5,11 @@ export default function CalendarDay (props) {
     const dayOfMonth     = props.dayOfMonth     || 42;
     const timestamp      = props.timestamp      || 0;
     const classes        = props.classes        || {};
-    const isPrevMonth    = props.isPrevMonth    !== false;
-    const isNextMonth    = props.isNextMonth    !== false;
-    const isInRange      = props.isInRange      === true;
-    const isSameDay      = props.isSameDay      !== false;
-    const isSelected     = props.isSelected     !== false;
+    const isPrevMonth    = props.isPrevMonth;
+    const isNextMonth    = props.isNextMonth;
+    const isInRange      = props.isInRange;
+    const isSameDay      = props.isSameDay;
+    const isSelected     = props.isSelected;
 
     const className = 
         `${classes.calendarDay} `                                       + 
