@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "409208c5539bf9ec27bc",
+    "revision": "622c3cfc1179220dcf09",
     "url": "/yardtp-datetimepicker/static/css/main.470e347b.chunk.css"
   },
   {
-    "revision": "409208c5539bf9ec27bc",
-    "url": "/yardtp-datetimepicker/static/js/main.409208c5.chunk.js"
+    "revision": "622c3cfc1179220dcf09",
+    "url": "/yardtp-datetimepicker/static/js/main.622c3cfc.chunk.js"
   },
   {
     "revision": "e9bc95973543eb157257",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/yardtp-datetimepicker/static/js/2.fac882b7.chunk.js"
   },
   {
-    "revision": "23ea4a46483f87298b6c9f945ee9d9b7",
+    "revision": "2f658b48522e35e7d323c8b6873e1fdd",
     "url": "/yardtp-datetimepicker/index.html"
   }
 ];
