@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+
+const SPACEBAR_KEYCODE = 32;
+const ENTER_KEYCODE = 13;
 
 export default function CalendarDay ({
     setSelectedDay = (() => {}),
@@ -6,7 +9,6 @@ export default function CalendarDay ({
     classes        = {},
     dayOfMonth, isPrevMonth, isNextMonth, isInRange, isSameDay, isSelected
 }) {
-
     const className = 
         `${classes.calendarDay} `                                       + 
         `${isInRange? classes.inRangeDay: classes.outOfRangeDay} `      + 
@@ -16,11 +18,21 @@ export default function CalendarDay ({
         `${isSameDay? classes.presentDay: ''}  `                        +
         `${isSelected? classes.selectedDay: ''} `                       ;
     
-    function onClick() { if (isInRange) { setSelectedDay(timestamp); } }
+    function onClick () { if (isInRange) { setSelectedDay(timestamp); } }
+    
+    function onKeyDown (e) { 
+        if (e.keyCode === ENTER_KEYCODE || e.keyCode === SPACEBAR_KEYCODE) {
+            e.preventDefault();
+            onClick();
+        } 
+    }
 
     return (
         <label>
-            <a  {...{ href: `#day-${timestamp}`, onClick, className } } >
+            <a  {...{ 
+                onKeyDown, onClick, className, 
+                tabIndex: (isInRange? 0: -1) 
+            } } >
                 <span>{dayOfMonth}</span>
             </a>
         </label>
