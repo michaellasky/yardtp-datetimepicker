@@ -3,19 +3,10 @@ import { CalendarDay, defaultStyles } from 'yardtp-datetimepicker';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { mount, shallow } from 'enzyme';
 import injectSheet from 'react-jss';
-import addDays from 'date-fns/addDays';
-import subDays from 'date-fns/subDays';
-import getDate from 'date-fns/getDate';
 
 let wrapper;
         
 Enzyme.configure({ adapter: new Adapter() });
-
-const now = new Date(1985, 9, 26, 1, 21);
-const yesterday = new Date(1985, 9, 25, 1, 21);
-const tomorrow = new Date(1985, 9, 27, 1, 21);
-const lastMonth = new Date(1985, 8, 25, 1, 21);
-const nextMonth = new Date(1985, 10, 25, 1, 21);
 
 describe('<CalendarDay />', () => {
 

@@ -1,16 +1,11 @@
 import React from 'react';
 
-export default function CalendarDay (props) {
-    const setSelectedDay = props.setSelectedDay || (() => {});
-    const dayOfMonth     = props.dayOfMonth     || 42;
-    const timestamp      = props.timestamp      || 0;
-    const classes        = props.classes        || {};
-
-    const isPrevMonth    = props.isPrevMonth;
-    const isNextMonth    = props.isNextMonth;
-    const isInRange      = props.isInRange;
-    const isSameDay      = props.isSameDay;
-    const isSelected     = props.isSelected;
+export default function CalendarDay ({
+    setSelectedDay = (() => {}),
+    timestamp      = 0,
+    classes        = {},
+    dayOfMonth, isPrevMonth, isNextMonth, isInRange, isSameDay, isSelected
+}) {
 
     const className = 
         `${classes.calendarDay} `                                       + 

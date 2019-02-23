@@ -28,22 +28,23 @@ import {
     MIN_DATE, MAX_DATE 
 } from './DateTimePicker';
 
-export default function DatePicker (props) {
-    const state = props.state || useDatePickerState();
+export default function DatePicker ({
+    state        = useDatePickerState(),
+    earliestDate = MIN_DATE, 
+    latestDate   = MAX_DATE,
+    style
+}) {
     const [value, setValue, calValue, setCalValue] = state;
 
-    const earliestDate  = props.earliestDate || MIN_DATE;
-    const latestDate    = props.latestDate   || MAX_DATE;
-    const style         = {...defaultStyles, ...props.style};
+    const combinedStyle = {...defaultStyles, ...style};
     const range         = { start: earliestDate, end: latestDate };
-    const monStart      = startOfMonth(calValue);
-    const firstCalDay   = subDays(monStart, getDay(monStart)); 
+    const monthStart    = startOfMonth(calValue);
+    const firstCalDay   = subDays(monthStart, getDay(monthStart)); 
     const today         = new Date();
 
-    const StyledDay = injectSheet (style) ((p) => <CalendarDay {...p} />);
+    const StyledDay = injectSheet(combinedStyle)((p) => <CalendarDay {...p}/>);
 
-    const setSelectedDay = (ts) => {
-        setValue(fromUnixTime(ts));
+    const setSelectedDay = (ts) => { setValue(fromUnixTime(ts));
         setCalValue(fromUnixTime(ts));
     }
 
@@ -72,7 +73,7 @@ export default function DatePicker (props) {
         });
     });
 
-    const StyledDayName = injectSheet (style) (({classes, children}) =>
+    const StyledDayName = injectSheet (combinedStyle) (({classes, children}) =>
         <h4 className={classes.weekDayName}>{children}</h4>
     );
 
@@ -83,9 +84,9 @@ export default function DatePicker (props) {
         return <StyledDayName key={dayName}>{dayName}</StyledDayName>;
     });
 
-    const StyledDatePicker = injectSheet(style) ((props) => 
+    const StyledDatePicker = injectSheet(combinedStyle) ((props) => 
         <div className={props.classes.datePicker}>
-            <MonthYearPicker {...{...props, state, style }} />
+            <MonthYearPicker {...{...props, state, style: combinedStyle }} />
             <div className={props.classes.dayNameHeadings}>{dayNames}</div>
             <div className={props.classes.calendarDays}>{weeks}</div>
         </div>
@@ -94,5 +95,5 @@ export default function DatePicker (props) {
     if      (isBefore(value, range.start)) { setValue(range.start); }
     else if (isAfter(value, range.end))    { setValue(range.end);   }
 
-    return <StyledDatePicker {...props} />;
+    return <StyledDatePicker {...{state, earliestDate, latestDate, style} } />;
 }
