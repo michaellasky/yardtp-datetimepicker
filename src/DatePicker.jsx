@@ -34,7 +34,6 @@ export default function DatePicker ({
     latestDate   = MAX_DATE,
     style
 }) {
-
     const StyledDatePicker = injectSheet({...defaultStyles, ...style}) (({ classes }) => {
 
         const [value, setValue, calValue, setCalValue] = state;
@@ -53,9 +52,8 @@ export default function DatePicker ({
             
             // Each day in that week
             return [...Array(7).keys()].map((dayNum) => {
-                const numDays = weekNum * 7 + dayNum;
                 const [valHours, valMin] = [getHours(value), getMinutes(value)];
-                const midnight = addDays(firstCalDay, numDays);
+                const midnight = addDays(firstCalDay, weekNum * 7 + dayNum);
                 const day = addHours(addMinutes(midnight, valMin), valHours);
                 
                 return <CalendarDay {...{
@@ -65,8 +63,8 @@ export default function DatePicker ({
                     dayOfMonth:  getDate(day),
                     isSelected:  isSameDay(day, value),
                     isSameDay:   isSameDay(day, today),
-                    isPrevMonth: differenceInCalendarMonths(day, calValue) <0,
-                    isNextMonth: differenceInCalendarMonths(day, calValue) >0,
+                    isPrevMonth: differenceInCalendarMonths(day, calValue) < 0,
+                    isNextMonth: differenceInCalendarMonths(day, calValue) > 0,
                     isInRange:   isWithinInterval(startOfDay(day), range) || 
                                  isWithinInterval(endOfDay(day), range)
                 } } />;
@@ -74,7 +72,7 @@ export default function DatePicker ({
         });
     
         // ["Mon", "Tues", "Wed",...] starting from locale's first day of week
-        const dayNames = [...Array(7).keys()].map((weekDayNumber) => {
+        const dayNames = [...Array(7).keys()].map( (weekDayNumber) => {
             const dayName = format(addDays(firstCalDay, weekDayNumber), 'EEE');
             
             return <h4 key={dayName} className={classes.weekDayName}>{dayName}</h4>;

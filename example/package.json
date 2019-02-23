@@ -13,10 +13,10 @@
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
     "prop-types": "^15.7.2",
-    "react-scripts": "^2.1.5",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
-    "yardtp-datetimepicker": "^2.0.2"
+    "react-scripts": "^2.1.5",
+    "yardtp-datetimepicker": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
