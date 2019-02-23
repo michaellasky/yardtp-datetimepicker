@@ -34,66 +34,63 @@ export default function DatePicker ({
     latestDate   = MAX_DATE,
     style
 }) {
-    const [value, setValue, calValue, setCalValue] = state;
 
-    const combinedStyle = {...defaultStyles, ...style};
-    const range         = { start: earliestDate, end: latestDate };
-    const monthStart    = startOfMonth(calValue);
-    const firstCalDay   = subDays(monthStart, getDay(monthStart)); 
-    const today         = new Date();
+    const StyledDatePicker = injectSheet({...defaultStyles, ...style}) (({ classes }) => {
 
-    const StyledDay = injectSheet(combinedStyle)((p) => <CalendarDay {...p}/>);
+        const [value, setValue, calValue, setCalValue] = state;
 
-    const setSelectedDay = (ts) => { setValue(fromUnixTime(ts));
-        setCalValue(fromUnixTime(ts));
-    }
-
-    // Each calendar week
-    const weeks = [...Array(6).keys()].map((weekNum) => {
-        
-        // Each day in that week
-        return [...Array(7).keys()].map((dayNum) => {
-            const numDays = weekNum * 7 + dayNum;
-            const [valHours, valMin] = [getHours(value), getMinutes(value)];
-            const midnight = addDays(firstCalDay, numDays);
-            const day = addHours(addMinutes(midnight, valMin), valHours);
+        const range         = { start: earliestDate, end: latestDate };
+        const monthStart    = startOfMonth(calValue);
+        const firstCalDay   = subDays(monthStart, getDay(monthStart)); 
+        const today         = new Date();
+    
+        const setSelectedDay = (ts) => {setValue(fromUnixTime(ts));
+            setCalValue(fromUnixTime(ts));
+        }
+    
+        // Each calendar week
+        const weeks = [...Array(6).keys()].map((weekNum) => {
             
-            return <StyledDay {...{
-                setSelectedDay, 
-                timestamp:   getUnixTime(day),
-                dayOfMonth:  getDate(day),
-                isSelected:  isSameDay(day, value),
-                isSameDay:   isSameDay(day, today),
-                isPrevMonth: differenceInCalendarMonths(day, calValue) <0,
-                isNextMonth: differenceInCalendarMonths(day, calValue) >0,
-                isInRange:   isWithinInterval(startOfDay(day), range) || 
-                             isWithinInterval(endOfDay(day), range),
-                key: dayNum
-            } } />;
+            // Each day in that week
+            return [...Array(7).keys()].map((dayNum) => {
+                const numDays = weekNum * 7 + dayNum;
+                const [valHours, valMin] = [getHours(value), getMinutes(value)];
+                const midnight = addDays(firstCalDay, numDays);
+                const day = addHours(addMinutes(midnight, valMin), valHours);
+                
+                return <CalendarDay {...{
+                    setSelectedDay, classes,
+                    key:         dayNum,
+                    timestamp:   getUnixTime(day),
+                    dayOfMonth:  getDate(day),
+                    isSelected:  isSameDay(day, value),
+                    isSameDay:   isSameDay(day, today),
+                    isPrevMonth: differenceInCalendarMonths(day, calValue) <0,
+                    isNextMonth: differenceInCalendarMonths(day, calValue) >0,
+                    isInRange:   isWithinInterval(startOfDay(day), range) || 
+                                 isWithinInterval(endOfDay(day), range)
+                } } />;
+            });
         });
+    
+        // ["Mon", "Tues", "Wed",...] starting from locale's first day of week
+        const dayNames = [...Array(7).keys()].map((weekDayNumber) => {
+            const dayName = format(addDays(firstCalDay, weekDayNumber), 'EEE');
+            
+            return <h4 key={dayName} className={classes.weekDayName}>{dayName}</h4>;
+        });
+
+        if      (isBefore(value, range.start)) { setValue(range.start); }
+        else if (isAfter(value, range.end))    { setValue(range.end);   }
+
+        return (
+            <div className={classes.datePicker}>
+                <MonthYearPicker {...{state, classes }} />
+                <div className={classes.dayNameHeadings}>{dayNames}</div>
+                <div className={classes.calendarDays}>{weeks}</div>
+            </div>
+        );
     });
-
-    const StyledDayName = injectSheet (combinedStyle) (({classes, children}) =>
-        <h4 className={classes.weekDayName}>{children}</h4>
-    );
-
-    // ["Mon", "Tues", "Wed",...] starting from locale's first day of week
-    const dayNames = [...Array(7).keys()].map((weekDayNumber) => {
-        const dayName = format(addDays(firstCalDay, weekDayNumber), 'EEE');
-        
-        return <StyledDayName key={dayName}>{dayName}</StyledDayName>;
-    });
-
-    const StyledDatePicker = injectSheet(combinedStyle) ((props) => 
-        <div className={props.classes.datePicker}>
-            <MonthYearPicker {...{...props, state, style: combinedStyle }} />
-            <div className={props.classes.dayNameHeadings}>{dayNames}</div>
-            <div className={props.classes.calendarDays}>{weeks}</div>
-        </div>
-    );
-
-    if      (isBefore(value, range.start)) { setValue(range.start); }
-    else if (isAfter(value, range.end))    { setValue(range.end);   }
 
     return <StyledDatePicker {...{state, earliestDate, latestDate, style} } />;
 }

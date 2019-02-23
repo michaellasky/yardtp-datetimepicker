@@ -14,22 +14,25 @@ export default function TimePicker ({
     decreaseLabel     = "Decrease Time",
     style             = {}
 }) {
-    const [value, setValue] = state;
-    const combinedStyle     = { ...defaultStyles, ...style };
+    const combinedStyle = { ...defaultStyles, ...style };
 
-    const setVal = (v) => restrictTimeToDay? 
-                            setValue(setDate(v, getDate(value))): 
-                            setValue(v);
+    const StyledTimePicker = injectSheet (combinedStyle) (({classes}) => {
+        const [value, setValue] = state;
+        
+        const setVal = (v) => restrictTimeToDay? 
+                setValue(setDate(v, getDate(value))): 
+                setValue(v);
 
-    const StyledTimePicker = injectSheet (combinedStyle) ((props) => {
-        const classes = {
-            ...props.classes, 
-            button: props.classes.timeButton, 
-            container: props.classes.timePicker 
+        const timePickerClasses = {
+            ...classes, 
+            button: classes.timeButton, 
+            container: classes.timePicker 
         };
+
         const dateJoggerProps = {
-            ...props, classes, increaseLabel, decreaseLabel,
-            state: [value, setVal], 
+            increaseLabel, decreaseLabel,
+            state: [value, setVal],
+            classes: timePickerClasses 
         };
         
         return (
