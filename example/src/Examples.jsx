@@ -18,7 +18,7 @@ export default function Examples (props) {
   return (
       <div className="examples">
         <h1>yardtp-datetimepicker Examples</h1>
-        <h5>v2.0.1</h5>
+        <h5>v2.0.2</h5>
         <a href="https://github.com/NuclearHorseStudios/yardtp-datetimepicker">github</a> | <a href="https://www.npmjs.com/package/yardtp-datetimepicker">npm</a> 
         <nav>
           <ul>
@@ -73,18 +73,20 @@ export default function Examples (props) {
         
         <div className="example-container">
           <pre>{`
-// See Example.1.jsx
+// EXAMPLE 1: DatePicker basic usage
+
 export default function Example1 (props) {
 
-  const state = useDatePickerState(); 
-  const [selectedValue, setSelectedValue, calendarValue, setCalendarValue] = state;
+    // useDatePickerState will default to today
+    const state = useDatePickerState(); 
+    const [selectedValue, setSelectedValue, calendarValue, setCalendarValue] = state;
 
-  return (
-      <>
-      {selectedValue.toFormat('DD')} - {calendarValue.toFormat('DD')}
-      <DatePicker state={state} />
-      </>
-  );
+    return (
+        <>
+        {format(selectedValue, 'MMMM d, y')} - {format(calendarValue, 'MMMM d, y')}
+        <DatePicker state={state} />
+        </>
+    );
 }
           `}</pre>
           <div>
@@ -98,19 +100,23 @@ export default function Example1 (props) {
         </p>
         <div className="example-container">
           <pre>{`
-// See Example.2.jsx
+
+// EXAMPLE 2: TimePicker basic usage
+
 export default function Example2 (props) {
 
-  const state = useDatePickerState(); 
-  const [selectedValue, setSelectedValue] = state;
-
-  return (
-      <>
-      {selectedValue.toFormat('t')}
-      <TimePicker state={state} />
-      </>
-  );
-}
+    const state = useDatePickerState(); 
+  
+    // We can ignore the calendarValue states while still using useDatePickerState();
+    const [selectedValue, setSelectedValue] = state;
+  
+    return (
+        <>
+        {format(selectedValue, 'p')}
+        <TimePicker state={state} />
+        </>
+    );
+  }
           `}</pre>
           <div>
             <Example2 />
@@ -124,24 +130,27 @@ export default function Example2 (props) {
         </p>
         <div className="example-container">
           <pre>{`
-// See Example.3.jsx
+// EXAMPLE 3: Using DatePicker and TimePicker together
+
 export default function Example3 (props) {
 
-  const state = useDatePickerState(); 
-  const [selectedValue, setSelectedValue] = state;
+    const state = useDatePickerState(); 
+  
+    // We can ignore the calendarValue states while still using useDatePickerState();
+    const [selectedValue, setSelectedValue] = state;
+  
+    return (
+        <>
+        {format(selectedValue, 'MMMM d, y p')}
+        <DatePicker state={state} />
+        <TimePicker state={state} />
+        
+        or
 
-  return (
-      <>
-      {selectedValue.toFormat('fff')}
-      <DatePicker state={state} />
-      <TimePicker state={state} />
-
-      or
-
-      <DateTimePicker state={state} />
-      </>
-  );
-}
+        <DateTimePicker state={state} />
+        </>
+    );
+  }
           `}</pre>
           <div>
             <Example3 />
@@ -154,30 +163,31 @@ export default function Example3 (props) {
         </p>
         <div className="example-container">
           <pre>{`
-// See Example.4.jsx
-export default function Example4 (props) {
+// EXAMPLE 4: Restricting selectable dates
 
-  const today = DateTime.local(1985, 10, 26, 1, 21);
-  const earliestDate = DateTime.local(1985, 10, 23, 1, 21);
-  const latestDate = DateTime.local(1985, 10, 29, 1, 21);
+export default function Example4 (p) {
 
-  const state = useDatePickerState(today); 
-  const [selectedValue, setSelectedValue] = state;
-
-  const props = {
-      state,
-      earliestDate,
-      latestDate
+    const today = new Date(1985, 9, 26, 1, 21);
+    const earliestDate = new Date(1985, 9, 23, 1, 21);
+    const latestDate = new Date(1985, 9, 29, 1, 21);
+  
+    const state = useDatePickerState(today); 
+    const [selectedValue, setSelectedValue] = state;
+  
+    const props = {
+        state,
+        earliestDate,
+        latestDate
+    }
+  
+    return (
+        <>
+        {format(selectedValue, 'MMMM d, y p')}
+        <DatePicker {...props} />
+        <TimePicker {...props} />
+        </>
+    );
   }
-
-  return (
-      <>
-      {selectedValue.toFormat('fff')}
-      <DatePicker {...props} />
-      <TimePicker {...props} />
-      </>
-  );
-}
           `}</pre>
           <div>
             <Example4 />
@@ -190,28 +200,28 @@ export default function Example4 (props) {
         </p>
         <div className="example-container">
           <pre>{`
-// See Example.5.jsx
+
+// EXAMPLE 5: Setting the Selected Value dynamically
+
 export default function Example5 (props) {
 
-  const state = useDatePickerState(); 
-  const [selectedValue, setSelectedValue] = state;
+    const state = useDatePickerState(); 
+    const [selectedValue, setSelectedValue] = state;
+  
+    function selectNextDay (e) {
+        setSelectedValue(addDays(selectedValue, 1));
+    }
 
-  function selectNextDay (e) {
-      const oneDay = Duration.fromObject({days: 1});
-      setSelectedValue(selectedValue.plus(oneDay));
+    return (
+        <>
+        <button onClick={selectNextDay}>Select next day</button>
+        &nbsp;&nbsp;
+        {format(selectedValue, 'MMMM d, y p')}
+        <DatePicker state={state} />
+        <TimePicker state={state} />
+        </>
+    );
   }
-
-  return (
-      <>
-      <button onClick={selectNextDay}>Select next day</button>
-      &nbsp;&nbsp;
-      {selectedValue.toFormat('fff')}
-      <DatePicker state={state} />
-      <TimePicker state={state} />
-      </>
-  );
-}
-
           `}</pre>
           <div>
             <Example5 />
@@ -227,21 +237,22 @@ export default function Example5 (props) {
         </p>
         <div className="example-container">
           <pre>{`
-// See Example.6.jsx
+// EXAMPLE 6: Setting restrictTimeToDay on TimePicker 
+
 export default function Example6 (props) {
 
-  const date = DateTime.local(2003, 4, 23, 23, 45);
-  const state = useDatePickerState(date); 
-  const [selectedValue, setSelectedValue] = state;
-
-  return (
-      <>
-      {selectedValue.toFormat('fff')}
-      <DatePicker state={state} />
-      <TimePicker state={state} restrictTimeToDay={false}/>
-      </>
-  );
-}
+    const date = new Date(2003, 3, 23, 23, 45);
+    const state = useDatePickerState(date); 
+    const [selectedValue, setSelectedValue] = state;
+  
+    return (
+        <>
+        {format(selectedValue, 'MMMM d, y p')}
+        <DatePicker state={state} />
+        <TimePicker state={state} restrictTimeToDay={false}/>
+        </>
+    );
+  }
           `}</pre>
           <div>
             <Example6 />
@@ -249,21 +260,22 @@ export default function Example6 (props) {
         </div>
         <div className="example-container">
           <pre>{`
-// See Example.7.jsx
+// EXAMPLE 7: Setting restrictTimeToDay on TimePicker 
+
 export default function Example7 (props) {
 
-  const date = DateTime.local(2003, 4, 23, 23, 45);
-  const state = useDatePickerState(date); 
-  const [selectedValue, setSelectedValue] = state;
-
-  return (
-      <>
-      {selectedValue.toFormat('fff')}
-      <DatePicker state={state} />
-      <TimePicker state={state} restrictTimeToDay={true}/>
-      </>
-  );
-}
+    const date = new Date(2003, 3, 23, 23, 45);
+    const state = useDatePickerState(date); 
+    const [selectedValue, setSelectedValue] = state;
+  
+    return (
+        <>
+        {format(selectedValue, 'MMMM d, y p')}
+        <DatePicker state={state} />
+        <TimePicker state={state} restrictTimeToDay={true}/>
+        </>
+    );
+  }
           `}</pre>
           <div>
             <Example7 />
@@ -276,26 +288,27 @@ export default function Example7 (props) {
         <p>See /src/defaultStyles.js for all the default styles that can be overridden</p>
         <div className="example-container">
           <pre>{`
-// See Example.8.jsx
+// EXAMPLE 8: Custom Styling 
+
 export default function Example8 (props) {
 
-  const hotDogStandStyle = {
-      selectedDay: {
-          backgroundColor: "#ffff55",
-          color: "#ff0000",
-      },
-      currentMonthDay: {
-          backgroundColor: "#ff0000",
-          color: "#ffff00",
-          borderRadius: "1em"
-      }
-  } 
-  return (
-      <>
-      <DateTimePicker style={hotDogStandStyle} />
-      </>
-  );
-}
+    const hotDogStandStyle = {
+        selectedDay: {
+            backgroundColor: "#ffff55",
+            color: "#ff0000",
+        },
+        currentMonthDay: {
+            backgroundColor: "#ff0000",
+            color: "#ffff00",
+            borderRadius: "1em"
+        }
+    } 
+    return (
+        <>
+        <DateTimePicker style={hotDogStandStyle} />
+        </>
+    );
+  }
           `}</pre>
           <div>
             <Example8 />
