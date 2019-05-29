@@ -13,10 +13,10 @@
   "dependencies": {
     "date-fns": "^2.0.0-alpha.27",
     "prop-types": "^15.7.2",
-    "react": "^16.8.1",
-    "react-dom": "^16.8.1",
-    "react-scripts": "^2.1.5",
-    "yardtp-datetimepicker": "^2.0.4"
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1",
+    "yardtp-datetimepicker": "^2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -33,8 +33,8 @@
   "peerDependencies": {},
   "devDependencies": {
     "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-adapter-react-16": "^1.13.2",
     "jss-snapshot-serializer": "^1.0.0",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.12.0"
   }
 }
