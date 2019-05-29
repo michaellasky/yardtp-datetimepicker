@@ -21,7 +21,7 @@ npm install --save yardtp-datetimepicker
 * [![npm version](http://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) React 16.8+ (hooks)
 
 ## Usage
-[Go to Live Examples](https://nuclearhorsestudios.github.io/yardtp-datetimepicker/)
+[Go to Live Examples](https://michaellasky.github.io/yardtp-datetimepicker/)
 
 ```jsx
 import React from 'react';
